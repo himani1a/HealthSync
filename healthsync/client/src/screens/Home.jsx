@@ -17,8 +17,8 @@ export default function Home() {
                   <p>Are you ready to embark on a transformative path to a healthier, happier you? At HealthSync, we believe in the power of personalized wellness. We&lsquore not just a fitness app; we&lsquore your partner in achieving your health and fitness goals.
                   </p>
                   <div className="mt-4">
-                    <button className="main-btn">Order now <i className="fas fa-shopping-basket ps-3"></i></button>
-                    <button className="white-btn ms-lg-4 mt-lg-0 mt-4">Order now <i className="fas fa-angle-right ps-3"></i></button>
+                    <button className="main-btn">Learn More <i className="fas fa-shopping-basket ps-3"></i></button>
+                    {/* <button className="white-btn ms-lg-4 mt-lg-0 mt-4">Order now <i className="fas fa-angle-right ps-3"></i></button> */}
                   </div>
                 </div>
               </div>

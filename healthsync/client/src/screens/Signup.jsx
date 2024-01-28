@@ -27,6 +27,7 @@ export default function Signup  () {
         values = await Object.assign(values, {profile: file || ''});
       }
      })   
+     
 
     /*formik doesnt support file upload so we use this function to upload file*/
     const onUpload = async e => {
