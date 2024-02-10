@@ -258,30 +258,55 @@ body: {
     profile : ''
 }
 */
-export async function updateUser(req,res){
-    try {
-        
-        // const id = req.query.id;
-        const { userId } = req.user;
+export async function updateUser(req, res) {
+    // It's a good practice to validate `req.user` before destructuring it
+    if (!req.user || !req.user.userId) {
+        console.error('Authentication failed: req.user is not set');
+        return res.status(401).send({ error: "Unauthorized: No user credentials provided." });
+    }
 
-        if(userId){
-            const body = req.body;
+    const { userId } = req.user;
+    const body = req.body;
 
-            // update the data
-            UserModel.updateOne({ _id : userId }, body, function(err, data){
-                if(err) throw err;
-
-                return res.status(201).send({ msg : "Record Updated!"});
-            })
-
-        }else{
-            return res.status(401).send({ error : "User Not Found!"});
+    UserModel.updateOne({ _id: userId }, body, function(err, data) {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send({ error: "Database error occurred while updating the record." });
         }
 
-    } catch (error) {
-        return res.status(401).send({ error });
-    }
+        if(data.nModified === 0) {
+            return res.status(404).send({ error: "No records updated. User may not exist." });
+        }
+
+        return res.status(201).send({ msg: "Record Updated!" });
+    });
 }
+
+
+// export async function updateUser(req,res){
+//     try {
+        
+//         // const id = req.query.id;
+//         const { userId } = req.user;
+
+//         if(userId){
+//             const body = req.body;
+
+//             // update the data
+//             UserModel.updateOne({ _id : userId }, body, function(err, data){
+//                 if(err) throw err;
+
+//                 return res.status(201).send({ msg : "Record Updated!"});
+//             })
+
+//         }else{
+//             return res.status(401).send({ error : "User Not Found!"});
+//         }
+
+//     } catch (error) {
+//         return res.status(401).send({ error });
+//     }
+// }
 
 
 
