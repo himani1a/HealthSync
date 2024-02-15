@@ -257,32 +257,32 @@ body: {
     address : '',
     profile : ''
 }
-*/
-export async function updateUser(req, res) {
-    // It's a good practice to validate `req.user` before destructuring it
-    if (!req.user || !req.user.userId) {
-        console.error('Authentication failed: req.user is not set');
-        return res.status(401).send({ error: "Unauthorized: No user credentials provided." });
+*/export async function updateUser(req, res) {
+    try {
+        const { userId } = req.user;
+
+        if (userId) {
+            const body = req.body;
+
+            // Update the data using Promises
+            UserModel.updateOne({ _id: userId }, body)
+                .then(() => res.status(201).send({ msg: "Record Updated!" }))
+                .catch((err) => {
+                    // Handle any errors that occur during the update
+                    console.error(err); // Log the error for debugging purposes
+                    res.status(500).send({ error: "An error occurred while updating the record." });
+                });
+
+        } else {
+            return res.status(401).send({ error: "User Not Found!" });
+        }
+
+    } catch (error) {
+        // Catch any errors that occur during the execution of the try block
+        console.error(error); // Log the error for debugging purposes
+        return res.status(500).send({ error: "An unexpected error occurred." });
     }
-
-    const { userId } = req.user;
-    const body = req.body;
-
-    UserModel.updateOne({ _id: userId }, body, function(err, data) {
-        if (err) {
-            console.error('Database error:', err.message);
-            return res.status(500).send({ error: "Database error occurred while updating the record." });
-        }
-
-        if(data.nModified === 0) {
-            return res.status(404).send({ error: "No records updated. User may not exist." });
-        }
-
-        return res.status(201).send({ msg: "Record Updated!" });
-    });
 }
-
-
 // export async function updateUser(req,res){
 //     try {
         
