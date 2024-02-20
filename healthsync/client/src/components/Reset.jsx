@@ -2,7 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import style from '../style/Username.css';
+import style from "../style/Username.css?inline";
+
 import backgroundImage from '../assets/back1.jpg'; 
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';  //to access data from user form

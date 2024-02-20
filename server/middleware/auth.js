@@ -20,6 +20,8 @@ export default async function Auth(req, res, next) {
         // Attach the user details to the request object
         req.user = decodedToken;
 
+        // res.json(decodedToken);
+
         // Proceed to the next middleware
         next();
     } catch (error) {

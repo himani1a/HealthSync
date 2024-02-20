@@ -31,7 +31,7 @@ export default function Home() {
             <div className="container book-food-text">
               <div className="text-center">
 
-                <h2>"Our Mission: Empowering You to Thrive"</h2>
+                <h2>&ldquo;Our Mission: Empowering You to Thrive&ldquo;</h2>
 
                 {/* <div className="col-lg-3 col-md-12 mt-lg-0 mt-4">
                   <button className="main-btn">Learn more</button>
@@ -68,10 +68,10 @@ export default function Home() {
                     amet leo. Mauris feugiat erat tellus.Far far away, behind the word mountains, far from the countries
                     Vokalia and Consonantia, there live the blind texts.</p> */}
                   <ul className="list-styled py-3">
-                    <li><b>Personalized Nutrition:</b> Tailored diet plans based on your individual needs, whether you're looking to shed a few pounds, build muscle, or simply eat healthier.</li>
+                    <li><b>Personalized Nutrition:</b> Tailored diet plans based on your individual needs, whether youre looking to shed a few pounds, build muscle, or simply eat healthier.</li>
                     <li><b>Supplement Recommendations:</b> Discover the right supplements that complement your diet and enhance your health journey.</li>
                     <li><b>Fitness Classes On-Demand:</b> Choose from a variety of live fitness classes led by certified instructors, scheduled at convenient times to fit your busy life.</li>
-                    <li><b>Sync Your Health:</b> Input your basic information like weight, height, age, health goals, fitness levels, dietary preferences, and medical conditions. We'll take care of the rest.</li>
+                    <li><b>Sync Your Health:</b> Input your basic information like weight, height, age, health goals, fitness levels, dietary preferences, and medical conditions. We will take care of the rest.</li>
                   </ul>
                   {/* <div className="text-center">
                     <button className="main-btn mt-4 mx-auto">Learn More</button>

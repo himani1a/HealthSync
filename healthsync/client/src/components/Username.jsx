@@ -1,25 +1,31 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import avatar from '../assets/profile.png';
-import style from '../style/Username.css';
+import style from "../style/Username.css?inline";
 import backgroundImage from '../assets/back1.jpg'; 
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';  //to access data from user form
 import { usernameValidate } from '../helper/validate';
+import { useAuthStore } from '../store/store';  
+
 
   export default function Username() {
-
-
+    
+    const navigate = useNavigate();
+   const setUsername = useAuthStore(state => state.setUsername);
     const formik = useFormik({
      initialValues: {
-        username: ''
+        username: 'example'
       },
       validate : usernameValidate,//to access data from user form
       validateOnBlur: false, //validate user input textbox only when clicked on submit button
       validateOnChange: false,
       onSubmit: async values => { //to access data from user form
-        console.log('form data', values)
+        //console.log('form data', values)
+        setUsername(values.username);
+        navigate('/password')
+
       }
      })      
     const containerStyle = {
@@ -54,7 +60,7 @@ import { usernameValidate } from '../helper/validate';
 
               <div className="text-center d-flex flex-column align-items-center justify-content-center mx-auto p-4 gap-3">
                 <input {...formik.getFieldProps('username')} className=" form-control textbox" type="text" placeholder='Username' />
-                <button className="btn col-12 col-md-6 col-lg-4" type='submit'>Let's Go</button>
+                <button className="btn col-12 col-md-6 col-lg-4" type='submit'>Lets Go</button>
               </div>
 
               <div className="text-center py-2">
