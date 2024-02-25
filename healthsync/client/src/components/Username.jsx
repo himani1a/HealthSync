@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import avatar from '../assets/profile.png';
-import style from "../style/Username.css?inline";
+import style from "../style/Username.css";
 import backgroundImage from '../assets/back1.jpg'; 
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';  //to access data from user form
@@ -11,21 +11,23 @@ import { useAuthStore } from '../store/store';
 
 
   export default function Username() {
-    
     const navigate = useNavigate();
-   const setUsername = useAuthStore(state => state.setUsername);
+    const setUsername = useAuthStore(state => state.setUsername); 
+    // const username = useAuthStore(state => state.auth.username);
+    // useEffect(() => {
+    // console.log(username)
+    // })
     const formik = useFormik({
      initialValues: {
-        username: 'example'
+        username: 'example123'
       },
       validate : usernameValidate,//to access data from user form
       validateOnBlur: false, //validate user input textbox only when clicked on submit button
       validateOnChange: false,
-      onSubmit: async values => { //to access data from user form
-        //console.log('form data', values)
+      onSubmit: async values => {    //to access data from user form
         setUsername(values.username);
+        // console.log(values)
         navigate('/password')
-
       }
      })      
     const containerStyle = {

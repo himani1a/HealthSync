@@ -1,30 +1,39 @@
 
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 import avatar from '../assets/profile.png';
 import style from "../style/Username.css?inline";
 import backgroundImage from '../assets/back1.jpg'; 
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';  //to access data from user form
 import { signupValidation } from '../helper/validate';
 import imageToBase64 from '../helper/convert';
+import { registerUser } from '../helper/helper';
+
 export default function Signup  () {
 
-    const [file, setFile] = useState();
+  const navigate = useNavigate()
+  const [file, setFile] = useState()
  
 
     const formik = useFormik({
      initialValues: { 
-      email:'',
-      username: '',
-      password:''
+      email:'example@gmail.com',
+      username: 'example123',
+      password:'admin@123'
       },
       validate : signupValidation,//to access data from user form
       validateOnBlur: false, //validate user input textbox only when clicked on submit button
       validateOnChange: false,
       onSubmit: async values => { //to access data from user form
-        console.log( values)
         values = await Object.assign(values, {profile: file || ''});
+        let registerPromise = registerUser(values)
+        toast.promise(registerPromise, {
+          loading: 'Creating...',
+          success : <b>Registered Successfully!</b>,
+          error : <b>Registered Successfully!</b>
+        });
+        registerPromise.then(function(){ navigate('/username')});
       }
      })   
      
@@ -74,14 +83,14 @@ export default function Signup  () {
               
 
               <div className="text-center d-flex flex-column align-items-center justify-content-center mx-auto p-3 gap-2">
-                <input {...formik.getFieldProps('email')} className="textbox" type="password" placeholder='Email*' />
-                <input {...formik.getFieldProps('username')} className="textbox" type="password" placeholder='Username*' />
-                <input {...formik.getFieldProps('password')} className="textbox" type="password" placeholder='Password*' />
+                <input {...formik.getFieldProps('email')} className="textbox" type="email" placeholder='Email*' />
+                <input {...formik.getFieldProps('username')} className="textbox" type="name" placeholder='Username*' />
+                <input {...formik.getFieldProps('password')} className="textbox" type="password" placeholder='Password* autocomplete="on"' />
                 <button className="btn col-12 col-md-6 col-lg-4" type='submit'>Sign Up</button>
               </div>
 
               <div className="text-center ">
-                <span className='text-secondary'>Already have a account?<Link className='registertext' to="/login"><b> Login Now</b></Link></span>
+                <span className='text-secondary'>Already have a account?<Link className='registertext' to="/username"><b> Login Now</b></Link></span>
               </div>
             </form>
             </div>

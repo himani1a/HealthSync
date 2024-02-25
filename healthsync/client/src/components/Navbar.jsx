@@ -23,7 +23,7 @@ export default function Navbar() {
                                 <Link className="nav-link" to="/">Blog</Link>
                             </li>
                             <div className="mx-3">
-                                <Link to="/login">
+                                <Link to="/username">
                                     <button type="button" className="btn1 mx-2">Login</button>
                                 </Link>
                                 <Link to="/signup">

@@ -1,29 +1,56 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import style from "../style/Username.css?inline";
-
+import { useNavigate, Navigate } from 'react-router-dom';
 import backgroundImage from '../assets/back1.jpg'; 
-import { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';  //to access data from user form
 import { resetPasswordValidation } from '../helper/validate';
+import { resetPassword } from '../helper/helper';
+import { useAuthStore } from '../store/store';
+import useFetch  from '../hooks/fetch.hook';
 
   export default function Reset() {
 
+    const { username } = useAuthStore(state => state.auth);
+    const navigate = useNavigate();
+    const [{ isLoading, apiData, status, serverError }] = useFetch('createResetSession')
+    
+
+    useEffect(() => {
+      console.log(apiData)
+    })
 
     const formik = useFormik({
-     initialValues: {
-        password:'',
-        confirmpassword: ''  
+      initialValues : {
+        password : 'admin@123',
+        confirm_pwd: 'admin@123'
       },
-      validate : resetPasswordValidation,//to access data from user form
-      validateOnBlur: false, //validate user input textbox only when clicked on submit button
+      validate : resetPasswordValidation,
+      validateOnBlur: false,
       validateOnChange: false,
-      onSubmit: async values => { //to access data from user form
-        console.log('form data', values)
+      onSubmit : async values => {
+        
+        let resetPromise = resetPassword({ username, password: values.password })
+  
+        toast.promise(resetPromise, {
+          loading: 'Updating...',
+          success: <b>Reset Successfully!</b>,
+          error : <b>Could not Reset!</b>
+        });
+  
+        resetPromise.then(function(){ navigate('/password') })
+  
       }
-     })      
+    })
+  
+  
+    if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
+    if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
+    if(status && status !== 201) return <Navigate to={'/password'} replace={true}></Navigate>
+  
     const containerStyle = {
       backgroundImage: `url(${backgroundImage})`, 
       backgroundSize: 'cover',

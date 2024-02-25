@@ -5,29 +5,43 @@ import avatar from '../assets/profile.png';
 import style from "../style/Username.css?inline";
 
 import backgroundImage from '../assets/back1.jpg';
-import { Toaster } from 'react-hot-toast';
+import useFetch from '../hooks/fetch.hook';
+import toast,{ Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';  //to access data from user form
 import { profileValidation } from '../helper/validate';
 import imageToBase64 from '../helper/convert';
+import { updateUser } from '../helper/helper';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function Profile() {
 
   const [file, setFile] = useState();
-
+  const [{ isLoading, apiData, serverError }] = useFetch()
+  const { navigate } = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      fullname: '',
-      email: '',
-      mobile: '',
-      address: ''
+      firstName: apiData?.firstName ||'' ,
+      email: apiData?.email || '',
+      mobile: apiData?.mobile || '',
+      address : apiData?.address || ''
     },
+    enableReinitialize: true,
     validate: profileValidation,//to access data from user form
     validateOnBlur: false, //validate user input textbox only when clicked on submit button
     validateOnChange: false,
     onSubmit: async values => { //to access data from user form
       console.log(values)
-      values = await Object.assign(values, { profile: file || '' });
+      values = await Object.assign(values, { profile: file ||apiData?.profile || '' });
+      let updatePromise = updateUser(values);
+
+      toast.promise(updatePromise, {
+        loading: 'Updating...',
+        success : <b>Update Successfully...!</b>,
+        error: <b>Could not Update!</b>
+      });
     }
   })
 
@@ -42,6 +56,14 @@ export default function Profile() {
     backgroundPosition: 'center',
     overflow: 'hidden'
   };
+
+   // logout handler 
+   function userLogout(){
+    localStorage.removeItem('token');
+    navigate('/')
+  }
+  if(isLoading) return <p>isLoading</p>;
+  if(serverError) return <p>{serverError.message}</p>
 
 
   return (
@@ -70,19 +92,19 @@ export default function Profile() {
 
 
                 <label htmlFor='profile'>
-                  <img src={file || avatar} className="profile" alt="avatar" />
+                  <img src={apiData?.profile || file || avatar} className="profile" alt="avatar" />
                 </label>
                 <input onChange={onUpload} type='file' id='profile' name='profile' />
 
 
                 <div className="text-center d-flex flex-column align-items-center justify-content-center mx-auto p-2 gap-3">
-                  <input {...formik.getFieldProps('firstname')} className="textbox" type="password" placeholder='Full Name' />
-                  <input {...formik.getFieldProps('mobile')} className="textbox" type="password" placeholder='Mobile Number' />
-                  <input {...formik.getFieldProps('email')} className="textbox" type="password" placeholder='Email' />
+                  <input {...formik.getFieldProps('firstName')} className="textbox" type="name" placeholder='Full Name' />
+                  <input {...formik.getFieldProps('mobile')} className="textbox" type="number" placeholder='Mobile Number' />
+                  <input {...formik.getFieldProps('email')} className="textbox" type="email" placeholder='Email' />
 
 
 
-                  <input {...formik.getFieldProps('address')} className="textbox" type="password" placeholder='Address' />
+                  <input {...formik.getFieldProps('address')} className="textbox" type="address" placeholder='Address' />
 
                   <button className="btn col-12 col-md-6 col-lg-4" type='submit'>Update</button>
 
@@ -90,7 +112,7 @@ export default function Profile() {
                 </div>
 
                 <div className="text-center">
-                  <span className='text-secondary'>Come back later?<Link className='registertext' to="/login"><b> Logout </b></Link></span>
+                  <span className='text-secondary'>Come back later?<Link onClick={userLogout}className='registertext' to="/"><b> Logout </b></Link></span>
                 </div>
               </form>
             </div>

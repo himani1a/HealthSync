@@ -24,7 +24,7 @@ let MailGenerator = new Mailgen({
     }
 })
 
-/** POST: http://localhost:8080/api/registerMail 
+/** POST: http://localhost:8000/api/registerMail 
  * @param: {
   "username" : "example123",
   "userEmail" : "admin123",
@@ -56,9 +56,11 @@ export const registerMail = async (req, res) => {
 
     // send mail
     transporter.sendMail(message)
-        .then(() => {
-            return res.status(200).send({ msg: "You should receive an email from us."})
-        })
-        .catch(error => res.status(500).send({ error }))
+    .then(() => {
+        return res.status(200).send({ msg: "You should receive an email from us."})
+    })
+    .catch(error => res.status(500).send({ error }))
+    
+
 
 }
