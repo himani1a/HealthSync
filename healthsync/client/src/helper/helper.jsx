@@ -94,8 +94,7 @@ export async function generateOTP(username) {
         } else {
           // Handle the case where email is not available
         }
-      }
-  
+      } 
       return Promise.resolve(code);
     } catch (error) {
       return Promise.reject({ error });

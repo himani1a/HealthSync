@@ -1,8 +1,13 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { Link } from "react-router-dom";
+
 
 export default function Home() {
+
+
+
   return (
     <div>
       <div><Navbar /></div>
@@ -106,20 +111,20 @@ export default function Home() {
           </div>
         </section>
 
-
+       
         <section id="book-food1">
           <div className="book-food1">
             <div className="container book-food-text">
               <div className="text-center">
 
-                <h2>Take the Health Test now! </h2>
+                <h2 className="mb-4">Take the Health Test now! </h2>
                
-                <button className="white-btn ms-lg-4 mt-lg-0 mt-4 mt-lg-2">Get Started <i className="fas fa-angle-right "></i></button>
-                
+                <Link className="white-btn ms-lg-4 mt-lg-0 mt-4 mt-lg-2" to="/bmi"> Get Started <i className="fas fa-angle-right"></i></Link>                
               </div>
             </div>
           </div>
         </section>
+   
 
         {/* <!-- section-4 explore food-->
         <section id="explore-food">

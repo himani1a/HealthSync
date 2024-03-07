@@ -16,13 +16,11 @@ import Reset from './components/Reset';
 import Password from './components/Password';
 import PageNotFound from './components/PageNotFound';
 import Profile from './components/Profile';
-import Main from './components/Main';
-import Quiz from './components/Quiz';
-import Result from './components/Result';
-
-
+import Bmi from './components/Bmi';
+import UserForm from './components/Recommendations';
 
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
+
 
 
 function App() {
@@ -39,9 +37,8 @@ function App() {
           <Route exact path="/reset" element={<Reset/>} />
           <Route exact path="/password" element={<ProtectRoute><Password/></ProtectRoute>} />
           <Route exact path="/profile" element={<AuthorizeUser><Profile/></AuthorizeUser>} />
-          <Route exact path="/main" element={<Main/>} />
-          <Route exact path="/quiz" element={<Quiz/>} />
-          <Route exact path="/result" element={<Result/>} />
+          <Route exact path="/bmi" element={<Bmi/>} />
+          <Route exact path="/recommendations" element={<UserForm/>} />
         </Routes>
       </div>
     </Router>

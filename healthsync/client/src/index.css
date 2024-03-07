@@ -142,7 +142,8 @@ p {
 }
 
 .white-btn {
-  padding: 0.625rem 1.875rem;
+  padding: 0.825rem 1.875rem;
+  
   line-height: 25px;
   background-color: var(--white-color);
   border: 0.1875rem solid var(--white-color);

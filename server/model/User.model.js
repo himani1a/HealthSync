@@ -16,11 +16,16 @@ export const UserSchema = new mongoose.Schema({
         required : [true,"Please enter unique email"],
         unique : true,
     },
-    firstName : { type: String},
-    lastName : { type: String},
-    mobile : { type: Number},
-    address : { type: String},
-    profile: { type: String},
+   
+    height: 0, // Change to number type
+    weight: 0, // Change to number type
+    age: 0,    // Change to number type       // Add age field
+    gender: { type: String },     // Add gender field
+    activity: { type: String },   // Add activity field
+    recommendations: {
+        type: Object,
+        default: null,
+    },
 })
 
 export default mongoose.model.Users || mongoose.model("User", UserSchema);
