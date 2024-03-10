@@ -1,9 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import axios from 'axios';  
+import config from './config.js';
 import connect from './database/conn.js';
 import router from './router/route.js';
 import UserModel from './model/User.model.js';
+import Recommendation from './model/Recommendation.model.js';
 
 const app = express();
 
@@ -13,41 +16,48 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.disable('x-powered-by'); //so that less hackers know my stack
 
-
 const port= process.env.PORT || 8000;
 
 /**http get request*/
 app.get('/', (req, res) => {
-    res.status(201).json("Home GET request");
+    res.status(200).json("Home GET request");
 });
 
 // Modify this route to handle user data and recommendations
-app.post('/api/user', async (req, res) => {
+app.post('/api/recommendations', async (req, res) => {
     try {
-        // Create a new User instance with the received data
-        const newUser = new UserModel(req.body);
-
-        // Save the user data to MongoDB
-        await newUser.save();
-
-        // Extract height, weight, age, gender, and activity from user data
+        // Extract user data
         const { height, weight, age, gender, activity } = req.body;
 
-        // Make a request to the Flask server with the additional user data
-        const flaskResponse = await axios.post('http://localhost:8000/api/get_recommendations', { height, weight, age, gender, activity });
+        // Create a new Recommendation instance
+        const newRecommendation = new Recommendation({
+            height, weight, age, gender, activity 
+        });
 
-        // Add the recommendations to the user document in MongoDB
-        newUser.recommendations = flaskResponse.data;
-        await newUser.save();
+         // Make a request to the Flask server
+        const flaskResponse = await axios.post(`${config.FLASK_API_URL}/api/recommendations`, newRecommendation.toObject());
 
-        // Send a response with the saved user data and recommendations
-        res.status(201).json({ user: newUser, recommendations: flaskResponse.data });
+        if (flaskResponse.status !== 200) {
+            // Handle Flask API error
+            throw new Error(`Flask API Error: ${flaskResponse.data.error}`);
+        }
+
+        // Save recommendations to the database
+        newRecommendation.recommendations = flaskResponse.data; 
+        try {
+            await newRecommendation.save();
+        } catch (mongooseError) {
+            throw new Error(`Database Error: ${mongooseError.message}`);
+        }
+
+        res.status(201).json({ recommendations: newRecommendation.recommendations });
+
     } catch (error) {
-        console.error('Error saving user data:', error);
-        res.status(500).json({ error: 'Internal Server Error', details: error.message });
+        console.error('Error:', error);
+        // Decide on appropriate error code based on type of error
+        res.status(500).json({ error: 'Internal Server Error', details: error.message }); 
     }
 });
-
 
 /** api routes */
 app.use('/api', router)
