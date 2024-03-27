@@ -17,8 +17,9 @@ import Password from './components/Password';
 import PageNotFound from './components/PageNotFound';
 import Profile from './components/Profile';
 import Bmi from './components/Bmi';
-import UserForm from './components/Recommendations';
-
+import DietForm from './components/Recommendations';
+import Recommendationsfood from './components/Recommendationsfood';
+import SupplementRecommendations from './components/SupplementRecommendations';
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
 
 
@@ -38,7 +39,9 @@ function App() {
           <Route exact path="/password" element={<ProtectRoute><Password/></ProtectRoute>} />
           <Route exact path="/profile" element={<AuthorizeUser><Profile/></AuthorizeUser>} />
           <Route exact path="/bmi" element={<Bmi/>} />
-          <Route exact path="/recommendations" element={<UserForm/>} />
+          <Route exact path="/recommendations" element={<DietForm/>} />
+          <Route path="/recommendationsfood" element={<Recommendationsfood />} /> 
+          <Route path="/SupplementRecommendations" element={<SupplementRecommendations />} />
         </Routes>
       </div>
     </Router>

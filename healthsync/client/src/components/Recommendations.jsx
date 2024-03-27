@@ -1,113 +1,126 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../style/DietForm.css'; // Assume a CSS file for styling
+import { useNavigate } from 'react-router-dom';
 
-const UserForm = () => {
-  const [userData, setUserData] = useState({
+const DietForm = () => {
+  const [formData, setFormData] = useState({
     height: '',
     weight: '',
     age: '',
     gender: '',
     activity: '',
-    recommendations: null, // Add state to store recommendations
   });
 
-  // Added state for displaying feedback or errors
-  const [feedback, setFeedback] = useState('');
-  const [error, setError] = useState('');
+  const [dietRecommendation, setDietRecommendation] = useState(null);
+  const [dietDetails, setDietDetails] = useState(null);
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFeedback(''); // Reset feedback
-    setError(''); // Reset error
-
-    console.log("Data being sent to backend:", userData);
-
     try {
-      const response = await axios.post('/api/recommendations', userData); // Correct API endpoint
-      // setUserData({ ...userData, recommendations: response.data }); // Store recommendations
-      setUserData(prevState => ({
-        ...prevState,
-        recommendations: response.data.recommendations
-      }));
+      const response = await axios.post('http://localhost:5000/api/recommendations', formData);
+      setDietRecommendation(response.data);
+      setDietDetails(response.data);
+      const saveResponse = await axios.post('http://localhost:5000/api/save_recommendations', {
+            formData, // User input data
+            recommendations: dietRecommendation // Diet recommendations
+        });
 
-      // Display recommendations in the UI
-      console.log('Recommendations:', response.data);
-      setFeedback('Recommendations received successfully.');
-
+        // Assuming your save endpoint returns a success message:
+        console.log(saveResponse.data); 
+      // You may want to handle displaying the recommendation in the UI here
     } catch (error) {
-      console.error('Error saving user data:', error);
-      setError('Failed to save user data. Please try again.'); // Display error message to the user
+      console.error('Error submitting form', error);
+      // Handle any errors here
     }
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Height (cm):
-          <input
-            type="number"
-            name="height"
-            value={userData.height}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          Weight (kg):
-          <input
-            type="number"
-            name="weight"
-            value={userData.weight}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          Age:
-          <input
-            type="number"
-            name="age"
-            value={userData.age}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          Gender:
-          <select name="gender" value={userData.gender} onChange={handleInputChange}>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+    <div className="diet-form-container">
+      <form onSubmit={handleSubmit} className="user-input-form">
+        <div className="form-group">
+          <label>Height (cm):</label>
+          <input type="number" name="height" value={formData.height} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label>Weight (kg):</label>
+          <input type="number" name="weight" value={formData.weight} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label>Age:</label>
+          <input type="number" name="age" value={formData.age} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label>Gender:</label>
+          <select name="gender" value={formData.gender} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
-        </label>
-        <label>
-          Activity Level:
-          <select name="activity" value={userData.activity} onChange={handleInputChange}>
+        </div>
+        <div className="form-group">
+          <label>Activity Level:</label>
+          <select name="activity" value={formData.activity} onChange={handleChange}>
+            <option value="">Select</option>
             <option value="Sedentary">Sedentary</option>
             <option value="Moderately Active">Moderately Active</option>
             <option value="Active">Active</option>
           </select>
-        </label>
-        <button type="submit">Submit</button>
+        </div>
+        <button type="submit" className="btn1">Submit</button>
       </form>
-
-      {error && <p className="error">{error}</p>}
-      {feedback && <p className="feedback">{feedback}</p>}
-
-      {/* Conditional rendering for recommendations */}
-      {userData.recommendations && (
+      {dietDetails && (
         <div>
-          <h2>Your Recommendations</h2>
-          <p><strong>Breakfast:</strong> {userData.recommendations.breakfast && userData.recommendations.breakfast.length > 0 ? userData.recommendations.breakfast.map(meal => `${meal.dish} (${meal.calories} calories, Ingredients: ${meal.ingredients})`).join(', ') : 'Not available'}</p>
-          <p><strong>Lunch:</strong> {userData.recommendations.lunch && userData.recommendations.lunch.length > 0 ? userData.recommendations.lunch.map(meal => `${meal.dish} (${meal.calories} calories, Ingredients: ${meal.ingredients})`).join(', ') : 'Not available'}</p>
-          <p><strong>Dinner:</strong> {userData.recommendations.dinner && userData.recommendations.dinner.length > 0 ? userData.recommendations.dinner.map(meal => `${meal.dish} (${meal.calories} calories, Ingredients: ${meal.ingredients})`).join(', ') : 'Not available'}</p>
+           <h2>Recommendations</h2>
+          <p>BMI: {dietDetails.bmi}</p>
+          <p>Calorie Needs: {dietDetails.calories}</p>
+         
         </div>
       )}
-
-
-    </>
+      {dietRecommendation && (
+        <div className="recommendation-section">
+         
+          
+          <div className="meal-recommendation">
+            <h3>Breakfast</h3>
+            {dietRecommendation.recommendations.breakfast.map((meal, index) => (
+              <div key={index} className="meal-card">
+                <p>{meal.dish} - {meal.calories} calories, {meal.ingredients} [{meal.category}]</p>
+              </div>
+            ))}
+          </div>
+          <div className="meal-recommendation">
+            <h3>Lunch</h3>
+            {dietRecommendation.recommendations.lunch.map((meal, index) => (
+              <div key={index} className="meal-card">
+                <p>{meal.dish} - {meal.calories} calories, {meal.ingredients} [{meal.category}]</p>
+              </div>
+            ))}
+          </div>
+          <div className="meal-recommendation">
+            <h3>Dinner</h3>
+            {dietRecommendation.recommendations.dinner.map((meal, index) => (
+              <div key={index} className="meal-card">
+                <p>{meal.dish} - {meal.calories} calories, {meal.ingredients} [{meal.category}]</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <button onClick={() => navigate('/SupplementRecommendations')} className="btn1">Supplement Recommendations</button>
+    </div>
+    
   );
 };
 
-export default UserForm;
+// In DietForm component or wherever you display the diet recommendations
+
+
+
+export default DietForm;
