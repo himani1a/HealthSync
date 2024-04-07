@@ -17,6 +17,25 @@ export const UserSchema = new mongoose.Schema({
         required: [true, "Please enter unique email"],
         unique: true,
     },
+    phonenumber: {
+        type: Number,
+        required: [true, "Please enter unique Number"],
+        unique: true,
+    },
+    blogs: [{
+        type: mongoose.Types.ObjectId,
+        ref: "Blog",
+    }],
+    
+
+},
+{timestamps: true}
+);
+
+export default mongoose.model("User", UserSchema);
+
+
+
     // username: {
     //     type: String,
     //     required: function() { return this.operationType === 'signup'; }, // Dynamically set 'required'
@@ -42,9 +61,3 @@ export const UserSchema = new mongoose.Schema({
     //     type: Object,
     //     default: null,
     // },
-})
-
-export default mongoose.model("User", UserSchema);
-
-
-

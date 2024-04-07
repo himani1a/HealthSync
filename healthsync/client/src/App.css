@@ -63,3 +63,7 @@
     background-color: transparent;
     color: var(--primary-color);
   }
+  .no-hover-effect:hover {
+    box-shadow: none !important; /* Important to override Bootstrap's CSS */
+    transform: none !important;
+}

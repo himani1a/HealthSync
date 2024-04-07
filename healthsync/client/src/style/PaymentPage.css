@@ -1,0 +1,14 @@
+.payment-card {
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  
+  @media (max-width: 768px) {
+    .payment-card {
+      margin: 0 20px;
+    }
+  }
+  
+  /* Add more responsive design and customization as needed */
+  

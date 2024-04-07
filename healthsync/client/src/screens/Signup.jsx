@@ -18,9 +18,10 @@ export default function Signup  () {
 
     const formik = useFormik({
      initialValues: { 
-      email:'example@gmail.com',
-      username: 'example123',
-      password:'admin@123'
+      email:'',
+      username: '',
+      password:'',
+      phonenumber:'',
       },
       validate : signupValidation,//to access data from user form
       validateOnBlur: false, //validate user input textbox only when clicked on submit button
@@ -85,7 +86,8 @@ export default function Signup  () {
               <div className="text-center d-flex flex-column align-items-center justify-content-center mx-auto p-3 gap-2">
                 <input {...formik.getFieldProps('email')} className="textbox" type="email" placeholder='Email*' />
                 <input {...formik.getFieldProps('username')} className="textbox" type="name" placeholder='Username*' />
-                <input {...formik.getFieldProps('password')} className="textbox" type="password" placeholder='Password* autocomplete="on"' />
+                <input {...formik.getFieldProps('password')} className="textbox" type="password" placeholder='Password*' />
+                <input {...formik.getFieldProps('phonenumber')} className="textbox" type="phone" placeholder='Phonenumber*' />
                 <button className="btn col-12 col-md-6 col-lg-4" type='submit'>Sign Up</button>
               </div>
 

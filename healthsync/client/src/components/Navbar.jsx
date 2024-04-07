@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 export default function Navbar() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light navigation-wrap">
-                <div className="container py-2">
-                    <Link className="navbar-brand"><img decoding="async" src='../src/assets/mian.png' alt="Logo" /></Link>
+            <nav className="navbar navbar-expand-lg navbar-light navigation-wrap" style={{ backgroundColor: 'white' }}>
+                <div className="container py-0">
+                    <Link className="navbar-brand"><img decoding="async" src='../src/assets/healthsync.png' alt="Logo" /></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

@@ -9,7 +9,7 @@ export const AuthorizeUser = ({ children }) => {
   if (!token) {
     return <Navigate to={'/'} replace={true} />;
   }
-
+ 
   return children;
 };
 

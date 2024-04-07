@@ -1,50 +1,62 @@
+formbody {
+  background-image: url('../assets/back1.jpg'); /* Use your desired image path */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the background image */
+  background-attachment: fixed; /* Keep the background image fixed during scrolling */
+}
+
+.form-background {
+  margin-top: 10px;
+  background-image: url(''); /* Use your desired image path */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the background image */
+}
+
+.recommendation-background {
+  background-image: url('../assets/wo.png'); /* Use your desired image path */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the background image */
+  border-radius: 5px;
+  
+}
+
+
+
 .diet-form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1400px;
   
-  .user-input-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-group {
-    margin-bottom: 10px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .submit-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .submit-btn:hover {
-    background-color: #e6c20e;
-  }
-  
+}
+
+.user-input-form {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  width: 40%;
+  margin: 1rem auto;
+}
+
+.form-group label {
+  color: #495057;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-group .small-input,
+.form-group .small-select {
+  width: 100%;
+  height: 36px; /* Smaller height for text fields */
+  padding: 0.375em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem; /* Space between input fields */
+  font-size: 0.875rem; /* Smaller font size for input fields */
+}
+
+
   .recommendation-section {
     width: 100%;
     padding: 20px;
@@ -78,3 +90,23 @@
     color: #495E57;
   }
   
+  
+  .card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-0.5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+  /* DietForm.css */
+.small-text {
+  font-size: 0.9rem;
+}
+
+
+.big-text {
+  font-size: 1.5 rem;
+  font-weight: bold;
+  color: #495E57;
+}

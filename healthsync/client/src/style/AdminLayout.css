@@ -1,0 +1,20 @@
+/* AdminLayout.css */
+
+.nav-link-custom {
+  color: #fff !important;  /* Change text color for contrast */
+  borderBottom: '1px solid #e6c20e'; 
+  paddingBottom: '0.5rem';
+  background-color: rgba(73, 94, 87, 0.1); /* Subtle background */
+} 
+
+.nav-link-custom.active, .nav-link-custom:focus {
+  color: #fff !important; 
+  background-color: #30413C !important;  
+  boxShadow: none !important; 
+}
+  
+  /* Optional: Remove the blue outline that appears when focusing on an element */
+  .nav-link-custom:focus {
+    outline: none !important;
+  }
+  

@@ -1,0 +1,98 @@
+/* Global Styles */
+body, html {
+    height: 100%;
+    margin: 0;
+    /* font-family: 'Avenir', sans-serif; 
+    background: rgb(20, 23, 33); 
+    color: white; */
+  }
+  
+  .background {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px; /* Padding to prevent sticking to edges */
+  }
+  
+  /* Card Styles */
+  .form-card {
+    background: rgba(43, 47, 60, 0.85); /* Slightly transparent background for the card */
+    border-radius: 10px; /* Rounded corners for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center;
+    width: 100%;
+    max-width: 320px; /* Adjust max-width as per your design preference */
+    padding: 40px; /* Padding inside the card */
+    box-sizing: border-box;
+  }
+  
+  .form-title {
+    font-size: 2rem; /* Responsive font size */
+    margin-bottom: 1rem;
+  }
+  
+  .form-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Auth Styles */
+  .auth {
+    margin-bottom: 1rem;
+  }
+  
+  .auth-label {
+    display: block; /* Make the label a block to take full width */
+    margin-bottom: .5rem; /* Space between label and input */
+  }
+  
+  .auth-input {
+    background-color: #3e404b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px; /* Comfortable padding */
+    width: 100%; /* Full width */
+    font-size: 1rem; /* Responsive font size */
+    margin-bottom: 1rem; /* Space between input and button */
+  }
+  
+  .auth-button {
+    width: 100%;
+    padding: 12px 15px; /* Padding to match input field */
+    font-size: 1rem; /* Matching font size for consistency */
+    background-color: #fa541c;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transition for hover effect */
+  }
+  
+  .auth-button:hover {
+    background-color: #ff6f47; /* Lighter shade for hover effect */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .form-title {
+      font-size: 1.5rem;
+    }
+  
+    .form-subtitle {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .form-card {
+      padding: 30px; /* Slightly less padding on smaller screens */
+    }
+  
+    .form-title,
+    .form-subtitle {
+      margin-bottom: 1rem; /* Less margin on smaller screens */
+    }
+  }
+  

@@ -19,7 +19,7 @@ export default function Home() {
               <div className="row">
                 <div className="col-lg-5 col-md-6">
                   <h1>Unlock your<br></br> best self,<br></br>one sync at a time.</h1>
-                  <p>Are you ready to embark on a transformative path to a healthier, happier you? At HealthSync, we believe in the power of personalized wellness. We&lsquore not just a fitness app; we&lsquore your partner in achieving your health and fitness goals.
+                  <p>Are you ready to embark on a transformative path to a healthier, happier you? At HealthSync, we believe in the power of personalized wellness.We are not just a diet and supplement app; we are your partner in achieving your health and diet goals.
                   </p>
                   <div className="mt-4">
                     <button className="main-btn">Learn More <i className="fas fa-shopping-basket ps-3"></i></button>

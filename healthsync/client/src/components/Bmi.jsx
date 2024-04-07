@@ -1,6 +1,8 @@
 import { useState } from "react";
 import backgroundImage from '../assets/back1.jpg';
 import style from "../style/Username.css?inline";
+import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 export default function Bmi() {
   const [height, setHeight] = useState("");
@@ -10,6 +12,10 @@ export default function Bmi() {
   const [bmiResult, setBmiResult] = useState(null);
   const [status, setStatus] = useState("");
   const [error, setError] = useState(null);
+  
+
+
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   function calculateBMI() {
     if (!height || !weight || !age) {
@@ -43,6 +49,23 @@ export default function Bmi() {
 
     setError(null);
   }
+
+  function handleRecommendationsClick() {
+    Swal.fire({
+      title: 'Please Sign up to get recommendations',
+      icon: 'info',
+      confirmButtonText: 'Sign Up',
+      buttonsStyling: true, // Enable buttons styling
+      confirmButtonColor: '#495E57', // Bootstrap's 'success' green color
+
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/Signup');
+      }
+    });
+  }
+
 
   function clearValues() {
     setHeight("");
@@ -159,6 +182,15 @@ export default function Bmi() {
             </div>
           )}
         </form>
+        <div className="text-center mt-3">
+          <button
+            className="btn btn-info"
+            type="button"
+            onClick={handleRecommendationsClick}
+          >
+            Get Diet and Supplement Recommendations
+          </button>
+        </div>
       </div>
     </div>
   );

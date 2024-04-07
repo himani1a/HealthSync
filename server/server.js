@@ -7,6 +7,10 @@ import connect from './database/conn.js';
 import router from './router/route.js';
 import Recommendation from './model/Recommendation.model.js';
 
+import adminRoute from './router/admin-route.js';
+
+import blogRoute from './router/Blogroute.js';
+
 const app = express();
 
 // Middlewares
@@ -15,7 +19,15 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.disable('x-powered-by');
 
+
+
 const port = process.env.PORT || 8000;
+
+app.use('/api', router);
+
+
+app.use('/api', blogRoute);
+
 
 app.get('/', (req, res) => {
   res.status(200).json('Home GET request');
@@ -27,8 +39,8 @@ app.post('/api/recommendations', async (req, res) => {
     const { height, weight, age, gender, activity } = req.body;
 
     // Make a request to the Flask server
-    const flaskResponse = await axios.post(`${config.FLASK_API_URL}/api/recommendations`, { 
-      height, weight, age, gender, activity 
+    const flaskResponse = await axios.post(`${config.FLASK_API_URL}/api/recommendations`, {
+      height, weight, age, gender, activity
     });
 
     if (flaskResponse.status !== 200) {
@@ -69,7 +81,89 @@ app.post('/api/save_recommendations', async (req, res) => {
   }
 });
 
-app.use('/api', router); // If you have additional routes
+app.use('/api/admin', adminRoute); // If you have additional routes
+
+
+app.use(cors({ origin: true }));
+
+// app.post("/authenticate", async (req, res) => {
+//   const { username } = req.body;
+//   try {
+//     const r = await axios.post(
+//       "https://api.chatengine.io/users/",
+//       { username:username, secret:username, first_name:username},
+//       { headers: { "Private-Key": "93acfb90-9712-48ae-8907-f04f1c0e79d7" } }
+//     );
+//     return res.status(r.status).json(r.data);
+//   } catch (e) {
+//     return res.status(e.response.status).json(e.response.data);
+//   }
+// });
+app.post("/authenticate", async (req, res) => {
+  const { username } = req.body;
+  
+  try {
+    // Check if the user already exists
+    // Assuming the Chat Engine has an endpoint to get user by username
+    const userRes = await axios.get(`https://api.chatengine.io/users/`, {
+      headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' }
+    });
+
+    // If the user exists, respond with user data
+    return res.status(200).json(userRes.data);
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      // If user does not exist, create the user
+      try {
+        const newUserRes = await axios.post(
+          "https://api.chatengine.io/users/",
+          { username: username, secret: username, first_name: username },
+          { headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' } }
+        );
+        return res.status(201).json(newUserRes.data);
+      } catch (createError) {
+        // Handle user creation error
+        return res.status(createError.response.status).json(createError.response.data);
+      }
+    } else {
+      // Handle other errors
+      return res.status(error.response.status).json(error.response.data);
+    }
+  }
+});
+
+
+
+app.post('/api/khalti', async (req, res) => {
+  const payload = req.body;
+  const khaltiResponse = await axios.post('https://a.khalti.com/api/v2/epayment/initiate/',
+    payload,
+    {
+      'headers': {
+        'Authorization': 'Key 4409a69ade9e4eb3a490b2c06718d0ad',
+      },
+    }
+
+  );
+
+  if (khaltiResponse) {
+    res.json({
+      success: true,
+      message: 'Payment initiated successfully',
+      data: khaltiResponse.data,
+    });
+  } else {
+    res.json({
+      status: 'error',
+      message: 'Payment initiation failed',
+    });
+  }
+
+
+});
+
+app.use('/api/admin', adminRoute);
+
 
 // Start server after database connection
 connect()
