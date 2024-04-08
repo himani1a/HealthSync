@@ -1,0 +1,44 @@
+.footer {
+  background-color: #495E57 !important; /* Dark slate green background */
+}
+
+.footer a {
+  color: #ffffff; /* Light link color */
+  text-decoration: none; /* No underline */
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.footer img {
+  max-width: 100%; /* Ensure the logo is responsive */
+  height: auto; /* Keep aspect ratio */
+}
+
+.footer ul {
+  padding: 0; /* Remove default padding */
+  list-style-type: none; /* Remove default list style */
+}
+
+.footer .form-label {
+  color: #ffffff; /* Light grey label color */
+}
+
+.footer .footer-subscribe-btn {
+  background-color: transparent; /* No background */
+  color: #333; /* Dark text color for visibility */
+  border: 1px solid #333; /* Dark border */
+  width: auto; /* Auto width based on content */
+  height: auto; /* Auto height based on content */
+  padding: 0.5rem 1rem; /* Some padding around the text */
+  border-radius: 0.25rem; /* Slight rounding of corners */
+}
+
+
+/* Adjustments for small screens */
+@media (max-width: 575.98px) {
+  .footer .form-group, .footer .form-check {
+    text-align: center;
+  }
+}

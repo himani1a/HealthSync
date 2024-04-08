@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import avatar from '../assets/profile.png';
 import style from "../style/Username.css?inline";
-
+import Navbar1 from '../components/Navbar1'
 import backgroundImage from '../assets/back1.jpg';
 import useFetch from '../hooks/fetch.hook';
 import toast,{ Toaster } from 'react-hot-toast';
@@ -58,26 +58,29 @@ export default function Profile() {
   };
 
    // logout handler 
-   function userLogout(){
+   {/*function userLogout(){
     localStorage.removeItem('token');
     navigate('/')
-  }
+  }*/}
   if(isLoading) return <p>isLoading</p>;
   if(serverError) return <p>{serverError.message}</p>
 
 
   return (
+    <div>
+      <Navbar1 />
+  
 
 
     <div className={`container-fuild ${style['background-container']}`} style={containerStyle}>
 
       <Toaster position='top-center' reverseOrder={false} toastOptions={{ style: { fontSize: '14px' } }} />
       <div className='row justify-content-center'>
-        <div className='col-sm-12 offset-sm-2 col-lg-3 col-xl-4 offset-xl-1 text-center'>
+      <div className='col-sm-12 offset-sm-2 col-lg-3 col-xl-4 offset-xl-1 text-center' style={{marginTop: '-20px'}}> 
 
 
           <div className='d-flex justify-content-center align-items-center vh-100'>
-            <div className="glass" style={{ height: "85%", marginRight: "4em", width: "50%" }}>
+            <div className="glass" style={{ height: "80%", marginRight: "4em", width: "50%" }}>
 
 
               <div className="title d-flex flex-column align-items-center">
@@ -111,14 +114,15 @@ export default function Profile() {
 
                 </div>
 
-                <div className="text-center">
+                {/* <div className="text-center">
                   <span className='text-secondary'>Come back later?<Link onClick={userLogout}className='registertext' to="/"><b> Logout </b></Link></span>
-                </div>
+                </div>*/}
               </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

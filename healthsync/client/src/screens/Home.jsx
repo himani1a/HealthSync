@@ -124,6 +124,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        
    
 
         {/* <!-- section-4 explore food-->
@@ -272,7 +273,7 @@ export default function Home() {
         </section> */}
 
 
-        {/* <!-- section-8 newslettar-->
+       
         <section id="newslettar">
           <div className="newslettar wrapper">
             <div className="container">
@@ -280,8 +281,7 @@ export default function Home() {
                 <div className="sol-sm-12">
                   <div className="text-content text-center pb-4">
                     <h2>Hurry up! Subscribe our newsletter
-                      and get 25% Off</h2>
-                    <p>Limited time offer for this month. No credit card required. </p>
+                      to get all the health news and tips.</h2>
                   </div>
                   <form className="newsletter">
                     <div className="row">
@@ -297,7 +297,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section> */}
+        </section>
 
 
 

@@ -37,7 +37,7 @@ import { verifyPassword } from '../helper/helper';
         loginPromise.then(res => {
           let { token } = res.data;
           localStorage.setItem('token', token);
-          navigate('/profile')
+          navigate('/sidebar')
         })
      }
     })      

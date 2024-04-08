@@ -35,6 +35,7 @@ import AuthPage from './chat/AuthPage'
 import ChatPage from './chat/ChatPage';
 import HomeVideo from './Room/homevideo';
 import RoomPage from './Room/RoomPage';
+import UserProfile from './components/Userprofile';
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
 
 
@@ -76,6 +77,7 @@ function App() {
           )}
           <Route path="/homevideo" element={<HomeVideo/>} />
           <Route path="/room/:roomId" element={<RoomPage />} />
+          <Route path="/userinfo" element={<UserProfile />} />
         </Routes>
         
       </div>
