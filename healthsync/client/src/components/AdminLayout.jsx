@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Collapse } from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+
 import '../style/AdminLayout.css';
 
 function AdminLayout() {
+    const { navigate } = useNavigate();
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navItemStyle = {
         color: '#e6c20e',
@@ -18,6 +22,11 @@ function AdminLayout() {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+    function userLogout() {
+        localStorage.removeItem('token');
+        navigate('/')
+      }
+      
 
     return (
         <div className="d-flex flex-column flex-lg-row" style={{ height: '100vh' }}>
@@ -55,6 +64,12 @@ function AdminLayout() {
                         <NavLink className="nav-link nav-link-custom" to="/admin/transactions" style={navItemStyle}>
                             <span className="me-2">🧾</span>
                             <b>Transactions</b>
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink Link onClick={userLogout} className="nav-link nav-link-custom" style={navItemStyle} to="/">
+                            <span className="me-2">🧾</span>
+                            <b>Logout</b>
                         </NavLink>
                     </li>
                     </ul>

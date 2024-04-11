@@ -1,8 +1,14 @@
 import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import confetti from 'canvas-confetti';
-import '../style/SuccessPage.css'; // Make sure you have the CSS file
+import '../style/SuccessPage.css';
+
 
 const SuccessPage = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const roomId = location.state?.roomId;
+
   useEffect(() => {
     confetti({
       zIndex: 999,
@@ -11,6 +17,15 @@ const SuccessPage = () => {
       origin: { y: 0.6 }
     });
   }, []);
+  
+  const handleJoinRoom = () => {
+    if (roomId) {
+        navigate(`/room/${roomId}`);
+    } else {
+        navigate("/room");
+    }
+};
+
 
   return (
     <div className="success-page">
@@ -24,11 +39,12 @@ const SuccessPage = () => {
           </div>
         </div>
         <h2>Payment succeeded!</h2>
-        <p>Thank you for processing your most recent payment. Your premium subscription will expire on June 2, 2024.</p>
-        <button className="dashboard-button">Your dashboard</button>
+        <p>Thank you for processing your most recent payment. You can now join the session.</p>
+        <button onClick={handleJoinRoom} className="dashboard-button">Your dashboard</button>
       </div>
     </div>
   );
+
 };
 
 export default SuccessPage;

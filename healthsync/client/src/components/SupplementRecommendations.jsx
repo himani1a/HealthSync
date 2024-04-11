@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import supplementImage from '../assets/supplement.png'; // Make sure to import your image here
-import Navbar from '../components/Navbar'
+import Navbar1 from '../components/Navbar1'
 
 const SupplementRecommendations = () => {
     const questions = {
@@ -46,7 +46,7 @@ const SupplementRecommendations = () => {
 
     return (
         <div>
-            <div><Navbar /></div>
+            <div><Navbar1 /></div>
             <div className="container py-4 ">
                 <h1 className="mb-4 text-center">Supplement Recommendations</h1>
                 <div className="card mb-4 no-hover-effect">

@@ -17,10 +17,10 @@ export default function Navbar() {
                                 <Link className="nav-link" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">About</Link>
+                                <Link className="nav-link" to="/about">About</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">Blog</Link>
+                                <Link className="nav-link" to="/blog">Blog</Link>
                             </li>
                             <div className="mx-3">
                                 <Link to="/username">

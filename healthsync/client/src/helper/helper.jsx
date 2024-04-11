@@ -34,23 +34,47 @@ export async function getUser({ username }){
 }
 
 /** register user function */
-export async function registerUser(credentials){
+// export async function registerUser(credentials) {
+//     try {
+//         console.log("Registering user with credentials:", credentials);
+
+//         // Directly use credentials if it's FormData; no need to reassemble if already prepared in the calling function
+//         const response = await axios.post('/api/signup', credentials);
+
+//         if (response.status === 201) {
+//             // Extract necessary data for follow-up actions, like sending a confirmation email
+//             const { username, email } = response.data; // Assuming these are returned in the response
+//             const msg = response.data.msg || "Registered successfully";
+
+//             // Follow-up action (e.g., sending an email)
+//             // Make sure to adjust this according to what your API expects and returns
+//             await axios.post('/api/registerMail', {
+//                 username,
+//                 userEmail: email,
+//                 text: msg
+//             });
+
+//             return msg;
+//         }
+//     } catch (error) {
+//         console.error("Error during user registration:", error);
+//         return Promise.reject(error);
+//     }
+// }
+
+export async function registerUser(credentials) {
     try {
         console.log("Registering user with credentials:", credentials);
 
-        const { data : { msg }, status } = await axios.post(`/api/signup`, credentials);
+        const response = await axios.post('/api/signup', credentials);
 
-        let { username, email, password, profile } = credentials;
-
-        /** send email */
-        if(status === 201){
-            await axios.post('/api/registerMail', { username, userEmail : email, text : msg, password, profile})
+        if (response.status === 201) {
+            const msg = response.data.msg || "Registered successfully";
+            return msg;
         }
-
-        return Promise.resolve(msg)
     } catch (error) {
         console.error("Error during user registration:", error);
-        return Promise.reject({ error })
+        return Promise.reject(error);
     }
 }
 

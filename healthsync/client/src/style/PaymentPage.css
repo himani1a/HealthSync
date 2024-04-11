@@ -1,5 +1,5 @@
 .payment-card {
-    max-width: 400px;
+    max-width: 1400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: none;
   }
@@ -10,5 +10,59 @@
     }
   }
   
+
+  /* TrainingPrograms.css */
+.training-programs-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa; /* Adjust the background color as needed */
+}
+
+.training-programs-title {
+  font-size: 24px;
+  color: #333; /* Adjust the text color as needed */
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.training-program-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.training-program-item {
+  width: 200px; /* Adjust the width as needed */
+  margin: 10px;
+  padding: 20px;
+  background: #ffffff; /* Card background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Card shadow */
+  border-radius: 8px; /* Rounded corners for card */
+}
+
+.training-program-icon i {
+  font-size: 48px; /* Icon size */
+  color: #e6c20e; /* Icon color, adjust as needed */
+  margin-bottom: 10px;
+}
+
+
+
+.fa-yoga 
+.fa-muscles 
+.fa-fitness
+
+.training-program-item h4 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.training-program-item p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
   /* Add more responsive design and customization as needed */
   

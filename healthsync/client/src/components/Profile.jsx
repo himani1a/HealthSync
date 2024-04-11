@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import avatar from '../assets/profile.png';
-import style from "../style/Username.css?inline";
+
 import Navbar1 from '../components/Navbar1'
 import backgroundImage from '../assets/back1.jpg';
 import useFetch from '../hooks/fetch.hook';
@@ -25,8 +25,10 @@ export default function Profile() {
     initialValues: {
       firstName: apiData?.firstName ||'' ,
       email: apiData?.email || '',
-      mobile: apiData?.mobile || '',
-      address : apiData?.address || ''
+      phonenumber: apiData?.phonenumber || '',
+      address : apiData?.address || '',
+      username : apiData?.username || '',
+
     },
     enableReinitialize: true,
     validate: profileValidation,//to access data from user form
@@ -72,15 +74,15 @@ export default function Profile() {
   
 
 
-    <div className={`container-fuild ${style['background-container']}`} style={containerStyle}>
+    <div className={`container-fuild`} style={containerStyle}>
 
       <Toaster position='top-center' reverseOrder={false} toastOptions={{ style: { fontSize: '14px' } }} />
-      <div className='row justify-content-center'>
+      <div className='row justify-content-center '>
       <div className='col-sm-12 offset-sm-2 col-lg-3 col-xl-4 offset-xl-1 text-center' style={{marginTop: '-20px'}}> 
 
 
           <div className='d-flex justify-content-center align-items-center vh-100'>
-            <div className="glass" style={{ height: "80%", marginRight: "4em", width: "50%" }}>
+            <div className="glass" style={{ height: "90%", marginRight: "4em", width: "50%" }}>
 
 
               <div className="title d-flex flex-column align-items-center">
@@ -102,9 +104,10 @@ export default function Profile() {
 
                 <div className="text-center d-flex flex-column align-items-center justify-content-center mx-auto p-2 gap-3">
                   <input {...formik.getFieldProps('firstName')} className="textbox" type="name" placeholder='Full Name' />
-                  <input {...formik.getFieldProps('mobile')} className="textbox" type="number" placeholder='Mobile Number' />
+                  <input {...formik.getFieldProps('username')} className="textbox" type="name" placeholder='Username' />
+                  <input {...formik.getFieldProps('phonenumber')} className="textbox" type="number" placeholder='Mobile Number' />
                   <input {...formik.getFieldProps('email')} className="textbox" type="email" placeholder='Email' />
-
+              
 
 
                   <input {...formik.getFieldProps('address')} className="textbox" type="address" placeholder='Address' />

@@ -26,17 +26,30 @@ export default function Signup  () {
       validate : signupValidation,//to access data from user form
       validateOnBlur: false, //validate user input textbox only when clicked on submit button
       validateOnChange: false,
-      onSubmit: async values => { //to access data from user form
-        values = await Object.assign(values, {profile: file || ''});
-        let registerPromise = registerUser(values)
-        toast.promise(registerPromise, {
-          loading: 'Creating...',
-          success : <b>Registered Successfully!</b>,
-          error : <b>Registered Successfully!</b>
-        });
-        registerPromise.then(function(){ navigate('/username')});
-      }
-     })   
+      onSubmit: async values => {
+        values = await Object.assign(values, { profile: file || '' });
+        let registerPromise = registerUser(values);
+    
+        toast.promise(
+            registerPromise,
+            {
+                loading: 'Creating...',
+                success: <b>Registered Successfully!</b>,
+                error: error => <b>{error.response?.data?.error || 'Not Registered Successfully!'}</b>
+            }
+        );
+    
+        registerPromise
+            .then(response => {
+                navigate('/username'); // Navigate on successful registration
+            })
+            .catch(error => {
+                // Error handling is managed by toast.promise
+                console.error('Registration error:', error);
+            });
+    },
+  });
+       
      
 
     /*formik doesnt support file upload so we use this function to upload file*/

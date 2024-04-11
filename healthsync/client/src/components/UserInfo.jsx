@@ -4,7 +4,7 @@ import useFetch from '../hooks/fetch.hook';
 import backgroundImage from '../assets/back1.jpg';
 
 function UserInfo() {
-    const [{ isLoading, apiData, serverError }] = useFetch();
+    const [{ isLoading, apiData, serverError }] = useFetch('/path/to/user/data/api');
 
     const containerStyle = {
         backgroundImage: `url(${backgroundImage})`,
@@ -17,8 +17,8 @@ function UserInfo() {
     if (serverError) return <div>Error: {serverError.message}</div>;
 
     return (
-      <div className={`container-fuild`} style={containerStyle}>
-      <Navbar1 />
+        <div style={containerStyle}>
+            <Navbar1 />
             <div className="container py-5">
                 <div className="row">
                     <div className="col-md-4">
@@ -29,7 +29,6 @@ function UserInfo() {
                         {/* User Information */}
                         <h2>{apiData?.username}</h2>
                         <p>Email: {apiData?.email}</p>
-                        <p>Name: {apiData?.firstName}</p>
                         <p>Phone: {apiData?.phonenumber}</p>
                         <p>Address: {apiData?.address}</p>
                         {/* Add other user information fields as needed */}

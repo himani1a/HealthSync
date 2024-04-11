@@ -26,21 +26,36 @@ import { verifyPassword } from '../helper/helper';
       validate : passwordValidate,//to access data from user form
       validateOnBlur: false, //validate user input textbox only when clicked on submit button
       validateOnChange: false,
-      onSubmit: async values => { //to access data from user form
-        let loginPromise = verifyPassword({ username, password : values.password })
+      onSubmit: async values => {
+        let loginPromise = verifyPassword({ username, password: values.password });
         toast.promise(loginPromise, {
           loading: 'Checking...',
-          success : <b>Login Successfully!</b>,
-          error : <b>Password Not Match!</b>
+          success: <b>Login Successfully!</b>,
+          error: <b>Password Not Match!</b>
         });
-  
-        loginPromise.then(res => {
-          let { token } = res.data;
+      
+        try {
+          let response = await loginPromise;
+          let { token } = response.data;
           localStorage.setItem('token', token);
-          navigate('/sidebar')
-        })
-     }
-    })      
+      
+          // Redirect based on username and password
+          if (username === 'admin' && values.password === 'admin@123') {
+            navigate('/admin');
+          } else if (username === 'instructor' && values.password === 'instructor@123') {
+            navigate('/instructor');
+          } else {
+            // If the credentials are valid but don't match admin or instructor, go to the sidebar
+            navigate('/sidebar');
+          }
+        } catch (error) {
+          // If login fails, assume the user is not registered and show a toast message
+          console.error('Login error:', error);
+          toast.error('You have not registered');
+          navigate('/signup');  // Navigate back to the login page or another appropriate page
+        }
+      }
+      })
     
      if(isLoading) return <h1>isLoading</h1>;
      if(serverError) return <h1>{serverError.message}</h1>

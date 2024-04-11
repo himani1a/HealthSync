@@ -107,51 +107,41 @@ export async function verifyUser(req, res, next){
 
 // }
 
-
 export async function signup(req, res) {
     try {
-        const { username, password, profile, email } = req.body;
+        const { username, password, email, phonenumber, profile } = req.body;
 
-        // Check for existing user by username
-        const existingUser = await UserModel.findOne({ username });
+        // Check for existing user by username and email
+        const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
         if (existingUser) {
-            return res.status(400).send({ error: "Please use a unique username." });
-        }
-
-        // Check for existing user by email
-        const existingEmail = await UserModel.findOne({ email });
-        if (existingEmail) {
-            return res.status(400).send({ error: "Please use a unique email." });
-        }
-
-        // Proceed with password hashing and user creation if no conflicts
-        if (password) {
-            try {
-                const hashedPassword = await bcrypt.hash(password, 10);
-                const user = new UserModel({
-                    username,
-                    password: hashedPassword,
-                    profile: profile || '',
-                    email
-                });
-
-                // Save the user and return success response
-                await user.save();
-                return res.status(201).send({ msg: "User registered successfully." });
-            } catch (error) {
-                // Error in password hashing
-                return res.status(500).send({ error: "Unable to hash password." });
+            if (existingUser.username === username) {
+                return res.status(400).send({ error: "Please use a unique username." });
             }
-        } else {
-            // Password not provided
-            return res.status(400).send({ error: "Password is required." });
+            if (existingUser.email === email) {
+                return res.status(400).send({ error: "Please use a unique email." });
+            }
         }
+
+        // Password hashing
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
+        const user = new UserModel({
+            username,
+            password: hashedPassword,
+            email,
+            profile: profile || '',
+            phonenumber
+        });
+
+        await user.save();
+        return res.status(201).send({ msg: "User registered successfully." });
+
     } catch (error) {
-        // Catch any other unexpected errors
-        return res.status(500).send({ error: error.message || "An unexpected error occurred." });
+        console.error("Signup error:", error);
+        return res.status(500).send({ error: "An unexpected error occurred." });
     }
 }
-
 
 /** POST: http://localhost:8000/api/login
  * @param: {

@@ -30,13 +30,17 @@ import AdminTransactions from './components/AdminTransactions';
 import BlogList from './components/BlogList';
 import CreateBlog from './components/CreateBlog';
 import BlogDetail from './components/BlogDetail';
+import Blog from './components/Blog.jsx';
 import Sidebar from './components/Sidebar';
 import AuthPage from './chat/AuthPage'
 import ChatPage from './chat/ChatPage';
-import HomeVideo from './Room/homevideo';
-import RoomPage from './Room/RoomPage';
-import UserProfile from './components/Userprofile';
+import Video from './Room/HomeVideo.jsx';
+import Room from './Room/RoomPage';
+import UserInfo from './components/Userprofile';
+import Instructor from './components/Instructor.jsx';
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
+
+
 
 
 function App() {
@@ -69,15 +73,18 @@ function App() {
           <Route path="/BlogList" element={<BlogList />} />
           <Route path="/CreateBlog" element={<CreateBlog />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
+          <Route path="/blog" element={<Blog />} />
+        
+          <Route path="/Instructor" element={<Instructor />} />             
           <Route path="/Sidebar" element={<Sidebar />} />
           {!user ? (
             <Route exact path="/Chat" element={<AuthPage onAuth={setUser} />} />
           ) : (
             <Route exact path="/Chat" element={<ChatPage user={user} />} />
           )}
-          <Route path="/homevideo" element={<HomeVideo/>} />
-          <Route path="/room/:roomId" element={<RoomPage />} />
-          <Route path="/userinfo" element={<UserProfile />} />
+          <Route path="/video" element={<Video/>} />
+          <Route path="/room" element={<Room />} />
+          <Route path="/userinfo" element={<UserInfo />} />
         </Routes>
         
       </div>

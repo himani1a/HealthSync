@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar'
+import Navbar1 from '../components/Navbar'
 import blogimage from '../assets/detail2.webp';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Form, Card, Container, Row, Col } from 'react-bootstrap';
@@ -78,7 +78,7 @@ const BlogList = () => {
     };
     return (
         <div>
-            <div><Navbar /></div>
+            <div><Navbar1 /></div>
 
             <Container className="mt-3">
                 <Button variant="primary" onClick={toggleCreateForm}>

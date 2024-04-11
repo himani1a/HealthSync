@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar'
 import style from "../style/Username.css?inline";
-import backgroundImage from '../assets/back1.jpg';
+import backgroundImage from '../assets/bb.png';
 import '../style/DietForm.css'; // Assume a CSS file for styling
 import { useNavigate } from 'react-router-dom';
 
@@ -51,8 +51,8 @@ const DietForm = () => {
   };
 
   return (
-    <div>
-      <div className={`container-fluid ${style['background-container']}`} style={containerStyle}></div>
+    
+    <div className={`container-fuild`} style={containerStyle}>
       <div><Navbar /></div>
 
       <div className="container mt-5">

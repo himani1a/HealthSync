@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar'
+import Navbar1 from '../components/Navbar'
 import style from "../style/Username.css?inline";
 
 
@@ -63,6 +63,8 @@ const DietForm = () => {
       // Handle any errors here
     }
   };
+ 
+
 
 
   const MealCard = ({ meal, mealType }) => {
@@ -121,7 +123,8 @@ const DietForm = () => {
   return (
     <div>
 
-      <div><Navbar /></div>
+
+      <div><Navbar1 /></div>
 
       <div className="container"> {/* Use 'container' for a responsive fixed width container */}
         <div className="row justify-content-center"> {/* Centers the form in the middle of the page */}

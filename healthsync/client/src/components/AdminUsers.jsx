@@ -91,7 +91,6 @@ export const AdminUsers = () => {
                 <th>Username</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -115,11 +114,11 @@ export const AdminUsers = () => {
                     <React.Fragment>
                       <td>{user.username}</td>
                       <td>{user.email}</td>
-                      <td>{user.phone}</td>
+                      <td>{user.phonenumber}</td>
                       <td>
                         <button className="btn btn-primary" onClick={() => {
                           setEditingUser(user._id);
-                          setEditFormData({ username: user.username, email: user.email, phone: user.phone });
+                          setEditFormData({ username: user.username, email: user.email, phone: user.phonenumber });
                         }}>
                           Update
                         </button>

@@ -18,17 +18,22 @@ export const UserSchema = new mongoose.Schema({
         unique: true,
     },
     phonenumber: {
-        type: Number,
-        required: [true, "Please enter unique Number"],
-        unique: true,
+        type: String,
+        required: [true, "Please enter unique Number"]
     },
-    blogs: [{
-        type: mongoose.Types.ObjectId,
-        ref: "Blog",
-    }],
+    firstName: { type: String},
+    lastName: { type: String},
+    mobile : { type : Number},
+    address: { type: String},
+    profile: { type: String}
+    // blogs: [{
+    //     type: mongoose.Types.ObjectId,
+    //     ref: "Blog",
+    // }],
     
 
 },
+
 {timestamps: true}
 );
 

@@ -25,6 +25,10 @@ const port = process.env.PORT || 8000;
 
 app.use('/api', router);
 
+app.use(express.json({ limit: '10mb' })); // Adjust the limit as per your needs
+
+// Increase the size limit for URL-encoded payloads
+app.use(express.urlencoded({ limit: '10mb', extended: true })); // Adjust the limit as per your needs
 
 app.use('/api', blogRoute);
 
