@@ -57,12 +57,13 @@ function passwordVerify(errors = {}, values){
 }
 
 /** validate reset password */
-export async function resetPasswordValidation(values){
-    const errors = passwordVerify({}, values);
+export async function resetPasswordValidation(values) {
+    let errors = {};
+    errors = passwordVerify(errors, values);
 
-    if(values.password !== values.confirmpassword){
-        errors.exist = toast.error("Password do not match.");
-    } 
+    if (values.password !== values.confirm_pwd) {
+        errors.confirm_pwd = "Passwords do not match.";
+    }
 
     return errors;
 }

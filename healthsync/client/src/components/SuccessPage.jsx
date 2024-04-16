@@ -40,7 +40,7 @@ const SuccessPage = () => {
         </div>
         <h2>Payment succeeded!</h2>
         <p>Thank you for processing your most recent payment. You can now join the session.</p>
-        <button onClick={handleJoinRoom} className="dashboard-button">Your dashboard</button>
+        <button onClick={handleJoinRoom} className="dashboard-button">Join class now!</button>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import backgroundImage from '../assets/back1.jpg';
+
 import style from "../style/Username.css?inline";
+import Navbar from "./Navbar";
+import Footer from "./Footer"
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import Swal from 'sweetalert2'; // Import SweetAlert2
 
@@ -55,16 +58,17 @@ export default function Bmi() {
       title: 'Please Sign up to get recommendations',
       icon: 'info',
       confirmButtonText: 'Sign Up',
-      buttonsStyling: true, // Enable buttons styling
-      confirmButtonColor: '#495E57', // Bootstrap's 'success' green color
-
-      
+      cancelButtonText: 'Cancel',
+      showCancelButton: true,
+      buttonsStyling: true,
+      confirmButtonColor: '#495E57',
     }).then((result) => {
       if (result.isConfirmed) {
         navigate('/Signup');
       }
     });
   }
+
 
 
   function clearValues() {
@@ -97,6 +101,9 @@ export default function Bmi() {
   };
 
   return (
+    <div>
+      <Navbar />
+   
     <div className={`container-fluid ${style['background-container']}`} style={containerStyle}>
       <div className="container d-flex justify-content-center align-items-center vh-100">
         <form className="bg-light shadow rounded-3 p-4">
@@ -182,16 +189,27 @@ export default function Bmi() {
             </div>
           )}
         </form>
-        <div className="text-center mt-3">
-          <button
-            className="btn btn-info"
-            type="button"
-            onClick={handleRecommendationsClick}
-          >
-            Get Diet and Supplement Recommendations
-          </button>
+        </div>
+   
+      {/* Did you know card placed outside the main container and just above Footer */}
+      <div className="text-center mt-3 mb-4">
+        <div className="card no-hover-effect">
+          <div className="card-body">
+            <h5 className="card-title" style={{ fontSize: '35px', color:'#e6c20e' }}>Did you know?</h5>
+            <p className="card-text">Maintaining a balanced diet and taking the right supplements can greatly enhance your health. 
+            <br></br>Learn more about personalized diet and supplement plans.</p>
+            <button
+              className="btn btn-info"
+              type="button"
+              onClick={handleRecommendationsClick}
+            >
+              Get Diet and Supplement Recommendations
+            </button>
+          </div>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

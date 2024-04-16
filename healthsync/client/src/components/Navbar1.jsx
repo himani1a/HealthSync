@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
+    const { navigate } = useNavigate();
+
+    function userLogout1() {
+        localStorage.removeItem('token');
+        navigate('/')
+      }
+    
+    
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light navigation-wrap" style={{ backgroundColor: 'white' }}>
@@ -27,13 +36,13 @@ export default function Navbar() {
                                 <Link className="nav-link" to="/chat">Chat</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/tracker">Tracker</Link>
+                                <Link className="nav-link" to="/calorietrack">Tracker</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/profile">Profile</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/logout">Logout</Link>
+                                <Link onClick={userLogout1} className="nav-link" to="/">Logout</Link>
                             </li>
                         </ul>
                         <Link to="/sidebar">

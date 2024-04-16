@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar1 from '../components/Navbar'
 import style from "../style/Username.css?inline";
-
-
+import Footer from '../components/Footer';
 
 import { Card, Button, Row, Col, Container, Modal  } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -237,9 +236,10 @@ const DietForm = () => {
                 </Button>
             </Modal.Footer>
         </Modal>
-
+        <div><Footer /></div>
 
     </div>
+    
 
   );
 };

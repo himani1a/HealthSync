@@ -10,25 +10,25 @@ import Recommendation from './model/Recommendation.model.js';
 import adminRoute from './router/admin-route.js';
 
 import blogRoute from './router/Blogroute.js';
-
+import foodItemsRoutes from './router/foodItems.js';
 const app = express();
 
 // Middlewares
+// Middlewares
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '30mb' })); // Correctly set limit for JSON payloads
+app.use(express.urlencoded({ limit: '30mb', extended: true })); // Set limit for URL-encoded payloads
 app.use(morgan('tiny'));
 app.disable('x-powered-by');
 
 
 
 const port = process.env.PORT || 8000;
+app.use('/api/calorie', foodItemsRoutes);
 
 app.use('/api', router);
 
-app.use(express.json({ limit: '10mb' })); // Adjust the limit as per your needs
 
-// Increase the size limit for URL-encoded payloads
-app.use(express.urlencoded({ limit: '10mb', extended: true })); // Adjust the limit as per your needs
 
 app.use('/api', blogRoute);
 
@@ -36,6 +36,8 @@ app.use('/api', blogRoute);
 app.get('/', (req, res) => {
   res.status(200).json('Home GET request');
 });
+// Use the food item routes
+
 
 app.post('/api/recommendations', async (req, res) => {
   try {
@@ -85,6 +87,34 @@ app.post('/api/save_recommendations', async (req, res) => {
   }
 });
 
+app.get('/api/get_recommendations/:username', async (req, res) => {
+  try {
+    const username = req.params.username;
+    const newRecommendation = await Recommendation.find({ username: username }); // Assuming username is stored directly
+    res.json(newRecommendation);
+  } catch (error) {
+    console.error('Error fetching recommendations:', error);
+    res.status(500).json({ error: 'Error fetching recommendations' });
+  }
+});
+
+// // Assuming you have an authentication middleware to ensure the user is logged in
+// app.get('/api/user/:username/recommendations', async (req, res) => {
+//   const { username } = req.params;
+
+//   try {
+//       const recommendations = await Recommendation.find({ username: username });
+//       if (!recommendations || recommendations.length === 0) {
+//           return res.status(404).json({ message: 'No recommendations found' });
+//       }
+//       res.json(recommendations);
+//   } catch (error) {
+//       console.error('Error fetching recommendations:', error);
+//       res.status(500).json({ error: 'Error fetching recommendations' });
+//   }
+// });
+
+
 app.use('/api/admin', adminRoute); // If you have additional routes
 
 
@@ -103,12 +133,75 @@ app.use(cors({ origin: true }));
 //     return res.status(e.response.status).json(e.response.data);
 //   }
 // });
+// app.post("/authenticate", async (req, res) => {
+//   const { username } = req.body;
+  
+//   try {
+//     // Check if the user already exists
+//     // Assuming the Chat Engine has an endpoint to get user by username
+//     const userRes = await axios.get(`https://api.chatengine.io/users/`, {
+//       headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' }
+//     });
+
+//     // If the user exists, respond with user data
+//     return res.status(200).json(userRes.data);
+//   } catch (error) {
+//     if (error.response && error.response.status === 404) {
+//       // If user does not exist, create the user
+//       try {
+//         const newUserRes = await axios.post(
+//           "https://api.chatengine.io/users/",
+//           { username: username, secret: "Himanichat1@", first_name: username },
+//           { headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' } }
+//         );
+//         return res.status(201).json(newUserRes.data);
+//       } catch (createError) {
+//         // Handle user creation error
+//         return res.status(createError.response.status).json(createError.response.data);
+//       }
+//     } else {
+//       // Handle other errors
+//       return res.status(error.response.status).json(error.response.data);
+//     }
+//   }
+// });
+// app.post("/authenticate", async (req, res) => {
+//   const { username } = req.body;
+
+//   // Set a dynamic or fixed secret; here we use a fixed one for simplicity
+//   const userSecret = "Himanichat1@";
+
+//   try {
+//     // Attempt to create the user directly without checking if they exist
+//     const newUserRes = await axios.post(
+//       "https://api.chatengine.io/users/",
+//       { username, secret: userSecret, first_name: username },
+//       { headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' } }
+//     );
+//     return res.status(201).json(newUserRes.data);
+//   } catch (error) {
+//     if (error.response && error.response.status === 400 && error.response.data.error === "User already exists") {
+//       // If the user already exists, fetch their details instead
+//       try {
+//         const userRes = await axios.get(`https://api.chatengine.io/users/${username}/`, {
+//           headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' }
+//         });
+//         return res.status(200).json(userRes.data);
+//       } catch (fetchError) {
+//         return res.status(fetchError.response.status).json(fetchError.response.data);
+//       }
+//     } else {
+//       // Handle other errors
+//       return res.status(error.response.status).json(error.response.data);
+//     }
+//   }
+// });
 app.post("/authenticate", async (req, res) => {
   const { username } = req.body;
+  const encodedUsername = encodeURIComponent(username); // Correctly encode the username to handle special characters
   
   try {
-    // Check if the user already exists
-    // Assuming the Chat Engine has an endpoint to get user by username
+    // Check if the user already exists by querying with the specific username
     const userRes = await axios.get(`https://api.chatengine.io/users/`, {
       headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' }
     });
@@ -117,20 +210,18 @@ app.post("/authenticate", async (req, res) => {
     return res.status(200).json(userRes.data);
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      // If user does not exist, create the user
+      // User does not exist, create the user
       try {
         const newUserRes = await axios.post(
           "https://api.chatengine.io/users/",
-          { username: username, secret: username, first_name: username },
+          { username, secret: "Himanichat1@", first_name: username },
           { headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' } }
         );
         return res.status(201).json(newUserRes.data);
       } catch (createError) {
-        // Handle user creation error
         return res.status(createError.response.status).json(createError.response.data);
       }
     } else {
-      // Handle other errors
       return res.status(error.response.status).json(error.response.data);
     }
   }

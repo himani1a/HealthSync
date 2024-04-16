@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar1 from '../components/Navbar'
+import Navbar1 from '../components/Navbar1'
 import blogimage from '../assets/detail2.webp';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Form, Card, Container, Row, Col } from 'react-bootstrap';

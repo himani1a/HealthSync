@@ -22,4 +22,7 @@ router.route('/createResetSession').get(controller.createResetSession) //reset a
 router.route('/updateuser').put( Auth, controller.updateUser); //update user profile
 router.route('/resetPassword').put(controller.verifyUser,controller.resetPassword); //use to reset password
 
+
+
+
 export default router;

@@ -1,37 +1,47 @@
-.supplement-recommendations {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+.supplement-container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
 }
 
-.supplement-form {
+
+.info-box {
+    display: flex;
+    height: max-content;
+    align-items: center;
+    background-color: #FFF9C4;
+    padding: 20px;
     margin-bottom: 20px;
 }
 
-.recommendation-results {
-    margin-top: 20px;
+.info-image {
+    flex: 0 0 auto; /* You can adjust the size here */
+    padding-right: 20px;
 }
 
-.supplement-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.info-image img {
+    width: 100%; /* or fixed width as needed */
+    height: auto; /* maintain aspect ratio */
+    max-width: 120px; /* adjust as needed */
 }
-
-.supplement-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 200px;
-    background-color: #f9f9f9;
-}
-
-.supplement-card h3 {
-    color: #333;
-    margin: 0 0 10px 0;
-}
-
-.supplement-card p {
-    color: #666;
-    font-size: 14px;
+.info-content h2 {
     margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.info-content p {
+    margin: 0;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .info-box {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .info-image {
+        margin-bottom: 10px;
+    }
 }

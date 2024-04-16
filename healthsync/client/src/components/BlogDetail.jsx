@@ -1,4 +1,3 @@
-// components/BlogDetail.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -28,13 +27,23 @@ const BlogDetail = () => {
     }
 
     const titleStyle = {
-        color: '#495E57', // Replace with the color extracted from your image
+        color: '#495E57',
         fontWeight: 'bold',
-        fontSize: '2rem' // Adjust font size as needed
+        fontSize: '2rem'
     };
 
     const contentStyle = {
-        fontSize: '1.1rem' // Adjust font size as needed
+        fontSize: '1.1rem',
+        whiteSpace: 'pre-wrap' // Add this to preserve whitespaces and line breaks
+    };
+
+    // Function to convert text content to HTML paragraphs
+    const renderParagraphs = text => {
+        return text.split('\n').map((paragraph, idx) => (
+            <p key={idx} style={{ textAlign: 'justify', textIndent: '2em', lineHeight: '1.6' }}>
+                {paragraph}
+            </p>
+        ));
     };
 
     return (
@@ -43,11 +52,10 @@ const BlogDetail = () => {
                 <Card.Body>
                     <Row>
                         <Col md={8}>
-                            <Card.Title style={titleStyle}>{blog.title}</Card.Title><br></br>
+                            <Card.Title style={titleStyle}>{blog.title}</Card.Title>
                             <Card.Text style={contentStyle}>
-                                <small>Written by <strong>{blog.author}</strong></small><br></br>
-                                <br></br>
-                                {blog.content}
+                                <small>Written by <strong>{blog.author}</strong></small>
+                                {renderParagraphs(blog.content)}
                             </Card.Text>
                         </Col>
                         <Col md={4} className="d-flex align-items-center justify-content-center">

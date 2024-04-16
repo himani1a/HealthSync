@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Navbar1 from '../components/Navbar1'
+
+
 import {
   MultiChatSocket,
   MultiChatWindow,
@@ -14,9 +17,14 @@ const ChatPage = (props) => {
   );
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div>
+
+<Navbar1 />
+    <div className="mb-4" style={{ height: '100vh' }}>
       <MultiChatWindow {...chatProps} />
       <MultiChatSocket {...chatProps} />
+    </div>
+ 
     </div>
   );
 }

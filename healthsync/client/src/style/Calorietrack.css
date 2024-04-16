@@ -1,0 +1,14 @@
+/* Calorietrack.css */
+.min-vh-100 {
+    background-image: url('../assets/back1.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* This will give a parallax-like effect */
+  }
+  
+
+  
+  .footer {
+    margin-top: auto; /* Push the footer to the bottom */
+  }
+  

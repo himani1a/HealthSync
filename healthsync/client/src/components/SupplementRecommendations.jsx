@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import supplementImage from '../assets/supplement.png'; // Make sure to import your image here
 import Navbar1 from '../components/Navbar1'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import girlImage from '../assets/girl1.png'; // This assumes you have an image called "girl.png" in your assets folder
+import Footer from '../components/Footer';
+
+import '../style/SupplementRecommendations.css'; // Import your custom CSS
 
 const SupplementRecommendations = () => {
     const questions = {
@@ -49,6 +55,7 @@ const SupplementRecommendations = () => {
             <div><Navbar1 /></div>
             <div className="container py-4 ">
                 <h1 className="mb-4 text-center">Supplement Recommendations</h1>
+              
                 <div className="card mb-4 no-hover-effect">
                     <div className="row g-0">
 
@@ -73,6 +80,18 @@ const SupplementRecommendations = () => {
                             <img src={supplementImage} className="img-fluid rounded-start" alt="Supplements" />
                         </div>
                     </div>
+                </div>
+                <div className="supplement-container">
+
+                <div className="info-box">
+                    <div className="info-image">
+                        <img src={girlImage} alt="Girl" /> {/* Image of the girl */}
+                    </div>
+                    <div className="info-content">
+                        <h2>Did You Know?</h2>
+                        <p>No matter what your goal is when taking supplements, one thing is certain: They aren't a replacement for a nutrient-dense, healthy diet.</p>
+                    </div>
+                </div>
                 </div>
                 {Object.entries(questions).map(([key, question]) => (
                     <div key={key} className="card mb-4 no-hover-effect">
@@ -99,6 +118,7 @@ const SupplementRecommendations = () => {
                     </div>
                 ))}
             </div>
+            <div><Footer /></div>
         </div>
     );
 };

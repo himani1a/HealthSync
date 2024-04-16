@@ -13,6 +13,7 @@ const RecommendationDetailsSchema = new mongoose.Schema({
 }, { _id: false });
 
 const RecommendationSchema = new mongoose.Schema({
+    
     height: { type: Number, required: true },
     weight: { type: Number, required: true },
     age: { type: Number, required: true },

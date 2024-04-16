@@ -38,6 +38,8 @@ import Video from './Room/HomeVideo.jsx';
 import Room from './Room/RoomPage';
 import UserInfo from './components/Userprofile';
 import Instructor from './components/Instructor.jsx';
+import About from './components/About.jsx';
+import Calorietrack from './components/SearchFood';
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
 
 
@@ -85,6 +87,8 @@ function App() {
           <Route path="/video" element={<Video/>} />
           <Route path="/room" element={<Room />} />
           <Route path="/userinfo" element={<UserInfo />} />
+          <Route path="/About" element={<About />} />
+          <Route path="/Calorietrack" element={<Calorietrack />} />
         </Routes>
         
       </div>

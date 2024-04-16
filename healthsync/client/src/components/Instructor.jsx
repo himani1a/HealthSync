@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import Navbar1 from '../components/Navbar1'
 import backgroundImage from '../assets/bb.png';
+import Footer from '../components/Footer'
 
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -20,10 +21,15 @@ const Instructor = () => {
         overflow: 'hidden'
     };
 
-
+    const sidebarStyle = {
+ 
+        backgroundColor: 'white', 
+        transition: 'width 0.5s',// Set the background color to white
+    
+      };
     const navLinkActiveStyle = {
         color: 'white',
-        backgroundColor: '#495E57' // Here you can set the color to green or any hex value you prefer
+        backgroundColor: '#495E57' 
     };
     function userLogout() {
         localStorage.removeItem('token');
@@ -40,96 +46,98 @@ const Instructor = () => {
     if (serverError) return <p>{serverError.message}</p>;
     return (
         <div className={`container-fuild`} style={containerStyle}>
-            <div className="row min-vh-100 flex-column flex-md-row">
-                <Navbar1 />
+        <Navbar1 />
+      <div className="row min-vh-100 flex-column flex-md-row">
+     
 
-                <aside className="col-12 col-md-3 col-xl-2 p-0  sidebar">
+        <aside className="col-12 col-md-2 col-xl-2 p-0 sidebar"style={sidebarStyle}>
 
-                    <hr />
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/instructor" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Dashboard user
-                            </Link>
-                        </li>
+        <hr />
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/profile" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Update profile
-                            </Link>
-                        </li>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/sidebar" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-home"></i> | Dashboard
+              </Link>
+            </li>
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/userinfo" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                User Information
-                            </Link>
-                        </li>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/profile" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-user-edit"></i> | Update Profile
+              </Link>
+            </li>
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/recommendations" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Generate Diet Plan
-                            </Link>
-                        </li>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/userinfo" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-info-circle"></i> | User Information
+              </Link>
+            </li>
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/SupplementRecommendations" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Supplements
-                            </Link>
-                        </li>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/recommendations" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-utensils"></i> | Generate Diet Plan
+              </Link>
+            </li>
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/Bloglist" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Create Blog
-                            </Link>
-                        </li>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/SupplementRecommendations" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-pills"></i> | Supplements
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/chat" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Chat
-                            </Link>
-                        </li>
+              </Link>
+            </li>
 
-                    </ul>
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link to="/room" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
-                                Join Class
-                            </Link>
-                        </li>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/Bloglist" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-blog"></i> | Create Blog
+              </Link>
+            </li>
 
-                    </ul>
-                
-                    <br></br>
-                    <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
-                            <Link onClick={userLogout} className="nav-link active" aria-current="page" style={navLinkActiveStyle} to="/" >
-                                Logout
-                            </Link>
-                        </li>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/chat" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-comments"></i> | Chat
+              </Link>
+            </li>
 
-                    </ul>
-                    <hr />
-                </aside>
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link to="/video" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <i className="fas fa-video"></i> | Join Class
+              </Link>
+            </li>
 
+          </ul>
+          <br></br>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <Link onClick={userLogout} className="nav-link active" aria-current="page" style={navLinkActiveStyle} to="/" >
+              <i className="fas fa-sign-out-alt"></i> | Logout
+
+              </Link>
+            </li>
+
+          </ul>
+          <hr />
+        </aside>
 
                 <main className="col">
                     {isMainUserPage && (
@@ -159,6 +167,7 @@ const Instructor = () => {
                     <Outlet />
                 </main>
             </div>
+            <div><Footer /></div>
         </div>
 
     );

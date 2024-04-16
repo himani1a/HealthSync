@@ -22,7 +22,7 @@
     border-radius: 50%;
     display: inline-block;
     position: relative;
-    background: #4bb543;
+    background: #495E57;
     margin-bottom: 20px;
   }
   
@@ -71,14 +71,11 @@
   }
   
   .icon-fix {
-    top: 8px;
-    width: 5px;
-    left: 26px;
-    z-index: 1;
-    height: 85px;
-    position: absolute;
-    transform: rotate(-45deg);
-    background-color: #4bb543;
+    top: 52px; 
+  left: 29px; 
+  width: 5px; 
+  height: 10px; 
+  background-color: #fff;
   }
   
   /* Keyframes for the checkmark animations */
@@ -134,7 +131,7 @@
   }
   
   .dashboard-button {
-    background-color: #4bb543;
+    background-color: #495E57;
     color: white;
     border: none;
     padding: 10px 20px;
