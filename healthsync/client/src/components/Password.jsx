@@ -52,7 +52,7 @@ import { verifyPassword } from '../helper/helper';
           // If login fails, assume the user is not registered and show a toast message
           console.error('Login error:', error);
           toast.error('You have not registered');
-          navigate('/signup');  // Navigate back to the login page or another appropriate page
+          
         }
       }
       })

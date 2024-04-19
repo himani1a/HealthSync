@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 export const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -25,24 +26,51 @@ export const AdminUsers = () => {
   };
 
   const deleteUser = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/admin/users/delete/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (response.ok) {
-        getAllUsersData(); // Refresh the list of users
-      } else {
-        const data = await response.json();
-        console.error('Failed to delete user:', data.message);
+    // Confirmation dialog
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`http://localhost:8000/api/admin/users/delete/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.ok) {
+          Swal.fire(
+            'Deleted!',
+            'The user has been deleted.',
+            'success'
+          );
+          getAllUsersData(); // Refresh the list of users
+        } else {
+          const data = await response.json();
+          console.error('Failed to delete user:', data.message);
+          Swal.fire({
+            title: 'Failed!',
+            text: 'Failed to delete user: ' + data.message,
+            icon: 'error'
+          });
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Error deleting user: ' + error,
+          icon: 'error'
+        });
       }
-    } catch (error) {
-      console.error('Error deleting user:', error);
     }
   };
-
   const handleEditFormChange = (event) => {
     setEditFormData({
       ...editFormData,

@@ -4,7 +4,10 @@ import Navbar1 from '../components/Navbar1'
 import blogimage from '../assets/detail2.webp';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Form, Card, Container, Row, Col } from 'react-bootstrap';
-import '../style/DietForm.css'; // Ass
+import '../style/DietForm.css';
+import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
+
 const BlogList = () => {
 
     const imageSrc = blogimage;
@@ -25,13 +28,38 @@ const BlogList = () => {
     }, []);
 
     const handleDelete = async (blogId) => {
-        try {
-            await axios.delete(`/api/blogs/${blogId}`);
-            setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== blogId));
-        } catch (error) {
-            console.error('Error deleting blog:', error);
-        }
+        // SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete this blog?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/api/blogs/${blogId}`)
+                    .then(() => {
+                        setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== blogId));
+                        Swal.fire(
+                            'Deleted!',
+                            'The blog has been deleted.',
+                            'success'
+                        )
+                    })
+                    .catch(error => {
+                        console.error('Error deleting blog:', error);
+                        Swal.fire(
+                            'Failed!',
+                            'There was an issue deleting the blog.',
+                            'error'
+                        );
+                    });
+            }
+        });
     };
+
     const handleEdit = async (blogId) => {
         try {
             const result = await axios.put(`/api/blogs/${blogId}`, currentBlog);
@@ -39,7 +67,7 @@ const BlogList = () => {
             setBlogs(prevBlogs =>
                 prevBlogs.map(blog => (blog._id === updatedBlog._id ? updatedBlog : blog))
             );
-            setShowEditForm(false); // Close the edit form modal
+            setShowEditForm(false); // Closing the edit form modal
         } catch (error) {
             console.error('Error updating blog:', error);
         }
@@ -51,7 +79,7 @@ const BlogList = () => {
             const result = await axios.post('/api/blogs', newBlogData);
             const createdBlog = result.data;
             setBlogs(prevBlogs => [...prevBlogs, createdBlog]);
-            setNewBlogData({ title: '', content: '', author: '' });
+            
             toggleCreateForm();
             navigate(`/blogs/${createdBlog._id}`);
         } catch (error) {
@@ -80,7 +108,7 @@ const BlogList = () => {
         <div>
             <div><Navbar1 /></div>
 
-            <Container className="mt-3">
+            <Container className="mt-3 no-hover-effect">
                 <Button variant="primary" onClick={toggleCreateForm}>
                     Create Blog
                 </Button>
@@ -190,40 +218,41 @@ const BlogList = () => {
 
                 {/* Blog Cards Display */}
                 <Row className="mt-4">
-  {blogs.map(blog => (
-    <Col key={blog._id} sm={12} md={6} lg={4} className="mb-3">
-      <Card className="h-100">
-        <Card.Img variant="top" src={blogimage} className="img-fluid" style={{ maxHeight: '190px'}} />
-        <Card.Body className="d-flex flex-column">
-          <Card.Title className="big-text">{blog.title}</Card.Title>
-          <Card.Text className="small-text">
-            {blog.content.substring(0, 100)}...
-          </Card.Text>
-          <a
-            href={`/blogs/${blog._id}`}
-            className="text-decoration-underline mb-2"
-            style={{ fontSize: '14px' }}
-          >
-            Read More
-          </a>
-          <p className="text-muted small mb-2">Author: {blog.author}</p>
-          <div className="d-flex justify-content-end mt-auto">
-            
-            <Button variant="outline-primary" onClick={() => openEditForm(blog)} size="sm" className="me-1">
-              Edit
-            </Button>
-            <Button variant="outline-danger" onClick={() => handleDelete(blog._id)} size="sm" className="ms-1">
-              Delete
-            </Button>
-          </div>
-        </Card.Body>
-      </Card>
-    </Col>
-  ))}
-</Row>
+                    {blogs.map(blog => (
+                        <Col key={blog._id} sm={12} md={6} lg={4} className="mb-3">
+                            <Card className="h-100">
+                                <Card.Img variant="top" src={blogimage} className="img-fluid" style={{ maxHeight: '190px' }} />
+                                <Card.Body className="d-flex flex-column">
+                                    <Card.Title className="big-text">{blog.title}</Card.Title>
+                                    <Card.Text className="small-text">
+                                        {blog.content.substring(0, 100)}...
+                                    </Card.Text>
+                                    <a
+                                        href={`/blogs/${blog._id}`}
+                                        className="text-decoration-underline mb-2"
+                                        style={{ fontSize: '14px' }}
+                                    >
+                                        Read More
+                                    </a>
+                                    <p className="text-muted small mb-2">Author: {blog.author}</p>
+                                    <div className="d-flex justify-content-end mt-auto">
+
+                                        <Button variant="outline-primary" onClick={() => openEditForm(blog)} size="sm" className="me-1">
+                                            Edit
+                                        </Button>
+                                        <Button variant="outline-danger" onClick={() => handleDelete(blog._id)} size="sm" className="ms-1">
+                                            Delete
+                                        </Button>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
 
 
             </Container>
+            <div><Footer /></div>
         </div>
     );
 };

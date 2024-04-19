@@ -25,10 +25,10 @@ export default function Profile() {
     initialValues: {
       firstName: apiData?.firstName ||'' ,
       email: apiData?.email || '',
-      phonenumber: apiData?.phonenumber || '',
+      phonenumber: apiData?.phonenumber|| '',
       address : apiData?.address || '',
       username : apiData?.username || '',
-
+      
     },
     enableReinitialize: true,
     validate: profileValidation,//to access data from user form

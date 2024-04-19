@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import Navbar1 from '../components/Navbar1'
 import backgroundImage from '../assets/bb.png';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -120,7 +120,7 @@ const Instructor = () => {
           <br></br>
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-              <Link to="/video" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
+              <Link to="/room" className="nav-link active" aria-current="page" style={navLinkActiveStyle}>
               <i className="fas fa-video"></i> | Join Class
               </Link>
             </li>

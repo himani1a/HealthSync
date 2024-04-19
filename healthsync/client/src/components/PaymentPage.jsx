@@ -3,7 +3,6 @@ import axios from 'axios';
 import Navbar1 from '../components/Navbar1';
 import useFetch from '../hooks/fetch.hook';
 
-// Import your custom styles if necessary
 
 import '../style/PaymentPage.css'; 
 

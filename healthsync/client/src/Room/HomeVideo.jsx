@@ -13,6 +13,7 @@ function Video() {
     const navigate = useNavigate();
 
     const handleJoinRoom = useCallback(() => {
+        
       Swal.fire({
           title: 'Payment Required',
           text: 'You need to pay first to continue.',

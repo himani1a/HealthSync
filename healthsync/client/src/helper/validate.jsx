@@ -3,20 +3,18 @@ import { authenticate } from './helper';
 
 
 /** validate login page username */
-export async function usernameValidate(values){
-    const errors = verifyusername({}, values);
-
-    if(values.username){
-        // check user exist or not
+export async function usernameValidate(values) {
+    let errors = {};
+    if (values.username) {
         const { status } = await authenticate(values.username);
-        
-        if(status !== 200){
-            errors.exist = toast.error('User does not exist!')
+        if (status !== 200) {
+            errors.username = 'User does not exist'; // Use field name to show Formik where to apply the error
+            toast.error('User does not exist!');
         }
     }
-
     return errors;
 }
+
 /** validate password */
 export async function passwordValidate(values){
     const errors = passwordVerify({}, values);

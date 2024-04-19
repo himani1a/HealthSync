@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar1 from '../components/Navbar'
+import Navbar1 from '../components/Navbar1'
 import style from "../style/Username.css?inline";
 import Footer from '../components/Footer';
 
@@ -38,11 +38,12 @@ const DietForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.height || !formData.weight || !formData.age || !formData.gender || !formData.activity) {
-      setFormError('Please fill in all details');
-      return; // Prevent the form from submitting
-    } else {
-      setFormError(''); // Clear any existing error messages
+    if (!formData.height || !formData.weight || !formData.age || !formData.gender || !formData.activity)  {
+      setFormError('All fields are required'); 
+      return;
+    }
+     else {
+      setFormError(''); 
     }
     try {
       const response = await axios.post('http://localhost:5000/api/recommendations', formData);
@@ -53,13 +54,11 @@ const DietForm = () => {
         formData, // User input data
         recommendations: dietRecommendation // Diet recommendations
       });
-
-      // Assuming your save endpoint returns a success message:
+      //  save endpoint will return a success message:
       console.log(saveResponse.data);
-      // You may want to handle displaying the recommendation in the UI here
     } catch (error) {
       console.error('Error submitting form', error);
-      // Handle any errors here
+      
     }
   };
  

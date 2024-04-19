@@ -32,7 +32,7 @@ const [showModal, setShowModal] = useState(false);
                   <p>Are you ready to embark on a transformative path to a healthier, happier you? At HealthSync, we believe in the power of personalized wellness.We are not just a diet and supplement app; we are your partner in achieving your health and diet goals.
                   </p>
                   <div className="mt-4">
-                    <button className="main-btn">Learn More <i className="fas fa-shopping-basket ps-3"></i></button>
+                    <button onClick={() => navigate(`/about`)}  className="main-btn" >Learn More <i className="fas fa-shopping-basket ps-3"></i></button>
                     {/* <button className="white-btn ms-lg-4 mt-lg-0 mt-4">Order now <i className="fas fa-angle-right ps-3"></i></button> */}
                   </div>
                 </div>

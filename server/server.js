@@ -199,30 +199,32 @@ app.use(cors({ origin: true }));
 app.post("/authenticate", async (req, res) => {
   const { username } = req.body;
   const encodedUsername = encodeURIComponent(username); // Correctly encode the username to handle special characters
-  
+
   try {
     // Check if the user already exists by querying with the specific username
     const userRes = await axios.get(`https://api.chatengine.io/users/`, {
-      headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' }
+      headers: { "Private-Key": '6243f6a8-7de4-40f0-bd61-099100d0b245' }
     });
 
     // If the user exists, respond with user data
     return res.status(200).json(userRes.data);
   } catch (error) {
+    // A 404 error specifically means no user was found
     if (error.response && error.response.status === 404) {
-      // User does not exist, create the user
+      // If User does not exist, create the user
       try {
         const newUserRes = await axios.post(
           "https://api.chatengine.io/users/",
           { username, secret: "Himanichat1@", first_name: username },
-          { headers: { "Private-Key": '93acfb90-9712-48ae-8907-f04f1c0e79d7' } }
+          { headers: { "Private-Key": '6243f6a8-7de4-40f0-bd61-099100d0b245' } }
         );
         return res.status(201).json(newUserRes.data);
       } catch (createError) {
         return res.status(createError.response.status).json(createError.response.data);
       }
     } else {
-      return res.status(error.response.status).json(error.response.data);
+      // If the error is not a 404, it could be other issues like a 403 Forbidden
+      return res.status(error.response.status).json({ message: "Failed to authenticate with Chat Engine", details: error.response.data });
     }
   }
 });

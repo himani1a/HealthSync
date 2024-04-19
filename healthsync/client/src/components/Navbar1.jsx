@@ -1,14 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 export default function Navbar() {
-    const { navigate } = useNavigate();
+    const navigate = useNavigate();
+
 
     function userLogout1() {
-        localStorage.removeItem('token');
-        navigate('/')
-      }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to log out?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('token');  
+                navigate('/');
+            }
+        });
+    }
     
     
     return (
@@ -42,7 +57,7 @@ export default function Navbar() {
                                 <Link className="nav-link" to="/profile">Profile</Link>
                             </li>
                             <li className="nav-item">
-                                <Link onClick={userLogout1} className="nav-link" to="/">Logout</Link>
+                                <Link onClick={userLogout1} className="nav-link" >Logout</Link>
                             </li>
                         </ul>
                         <Link to="/sidebar">

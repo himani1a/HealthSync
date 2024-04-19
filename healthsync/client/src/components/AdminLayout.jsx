@@ -3,11 +3,11 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Collapse } from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 import '../style/AdminLayout.css';
 
 function AdminLayout() {
-    const { navigate } = useNavigate();
+    const navigate = useNavigate();
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navItemStyle = {
@@ -22,11 +22,23 @@ function AdminLayout() {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+   
     function userLogout() {
-        localStorage.removeItem('token');
-        navigate('/')
-      }
-      
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to log out?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('token');  
+                navigate('/');
+            }
+        });
+    } 
 
     return (
         <div className="d-flex flex-column flex-lg-row" style={{ height: '100vh' }}>
@@ -67,7 +79,7 @@ function AdminLayout() {
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink Link onClick={userLogout} className="nav-link nav-link-custom" style={navItemStyle} to="/">
+                        <NavLink Link onClick={userLogout} className="nav-link nav-link-custom" style={navItemStyle} >
                             <span className="me-2">🧾</span>
                             <b>Logout</b>
                         </NavLink>

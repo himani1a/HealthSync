@@ -40,6 +40,7 @@ import UserInfo from './components/Userprofile';
 import Instructor from './components/Instructor.jsx';
 import About from './components/About.jsx';
 import Calorietrack from './components/SearchFood';
+import Comments from './components/Comment.jsx';
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
 
 
@@ -76,7 +77,7 @@ function App() {
           <Route path="/CreateBlog" element={<CreateBlog />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/blog" element={<Blog />} />
-        
+        <Route path='/comment' element={<Comments />} />
           <Route path="/Instructor" element={<Instructor />} />             
           <Route path="/Sidebar" element={<Sidebar />} />
           {!user ? (
